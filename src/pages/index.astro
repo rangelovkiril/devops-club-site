@@ -1,11 +1,12 @@
 ---
 import { getEntry } from "astro:content";
 import Hero from "../components/Hero.astro";
+import TextSection from "../components/TextSection.astro";
 import Layout from "../layouts/Layout.astro";
 
 const home = await getEntry("home", "home");
 if (!home) throw new Error("src/content/home.md is missing");
-const { title, description, discordUrl, hero } = home.data;
+const { title, description, discordUrl, hero, about, audience } = home.data;
 ---
 
 <Layout title={title} description={description}>
@@ -16,6 +17,12 @@ const { title, description, discordUrl, hero } = home.data;
       cta={hero.cta}
       hint={hero.hint}
       discordUrl={discordUrl}
+    />
+    <TextSection id="about" heading={about.heading} paragraphs={about.paragraphs} />
+    <TextSection
+      id="audience"
+      heading={audience.heading}
+      paragraphs={audience.paragraphs}
     />
   </main>
 </Layout>

@@ -147,3 +147,19 @@ svg {
   width: min(100% - 2rem, var(--page-width));
   margin-inline: auto;
 }
+
+/* Номерата на секциите са чист CSS: добавянето на секция не иска преномериране. */
+main {
+  counter-reset: section;
+}
+
+.section h2::before {
+  counter-increment: section;
+  content: counter(section, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--space-1);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
