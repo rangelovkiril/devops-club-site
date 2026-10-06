@@ -23,4 +23,18 @@ const home = defineCollection({
   }),
 });
 
-export const collections = { home };
+const meetings = defineCollection({
+  loader: glob({ base: "./src/content/meetings", pattern: "**/*.md" }),
+  schema: z.object({
+    date: z.coerce.date(),
+    time: z.string().optional(),
+    title: z.string(),
+    topic: z.string(),
+    speaker: z.string(),
+    room: z.string().optional(),
+    status: z.enum(["past", "planned"]),
+    materials: z.url().optional(),
+  }),
+});
+
+export const collections = { home, meetings };
