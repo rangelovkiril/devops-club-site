@@ -1,0 +1,81 @@
+---
+import { getCollection } from "astro:content";
+import MeetingItem from "./MeetingItem.astro";
+import Section from "./Section.astro";
+
+interface Props {
+  meetings: {
+    heading: string;
+    paragraphs: string[];
+    upcomingHeading: string;
+    emptyTitle: string;
+    emptyText: string;
+    roomLabel: string;
+    materialsLabel: string;
+  };
+  pastHeading: string;
+}
+
+const { meetings: text, pastHeading } = Astro.props;
+
+const all = await getCollection("meetings");
+const planned = all
+  .filter((m) => m.data.status === "planned")
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+const past = all
+  .filter((m) => m.data.status === "past")
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const labels = {
+  roomLabel: text.roomLabel,
+  materialsLabel: text.materialsLabel,
+};
+---
+
+<Section id="meetings" heading={text.heading}>
+  {text.paragraphs.map((p) => <p>{p}</p>)}
+  {
+    planned.length > 0 ? (
+      <>
+        <h3>{text.upcomingHeading}</h3>
+        <ul class="list">
+          {planned.map((meeting) => <MeetingItem meeting={meeting} {...labels} />)}
+        </ul>
+      </>
+    ) : (
+      <div class="soon">
+        <h3>{text.emptyTitle}</h3>
+        <p>{text.emptyText}</p>
+      </div>
+    )
+  }
+</Section>
+
+{
+  past.length > 0 && (
+    <Section id="past" heading={pastHeading}>
+      <ul class="list">
+        {past.map((meeting) => <MeetingItem meeting={meeting} {...labels} />)}
+      </ul>
+    </Section>
+  )
+}
+
+<style>
+  .list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .soon {
+    max-width: var(--measure);
+    padding: var(--space-2) var(--space-3);
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 0.5rem;
+  }
+
+  .soon p {
+    margin: 0;
+    color: var(--text-muted);
+  }
+</style>
