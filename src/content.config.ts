@@ -30,6 +30,17 @@ const home = defineCollection({
       materialsLabel: z.string(),
     }),
     past: z.object({ heading: z.string() }),
+    maintainer: section,
+    join: z.object({
+      heading: z.string(),
+      text: z.string(),
+      cta: z.string(),
+    }),
+    footer: z.object({
+      contactLabel: z.string(),
+      email: z.email(),
+      links: z.array(z.object({ label: z.string(), href: z.url() })),
+    }),
   }),
 });
 

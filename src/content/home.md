@@ -28,4 +28,21 @@ meetings:
   materialsLabel: Материали
 past:
   heading: Досега
+maintainer:
+  heading: Кой го води
+  paragraphs:
+    - Клубът се води от Кирил Рангелов. Той изнесе досегашните лекции и поддържа сайта и материалите.
+    - Клубът е отворен за съорганизатори и гост-лектори. Ако искаш да изнесеш лекция или да помагаш с организацията, пиши в Discord или на имейла по-долу.
+join:
+  heading: Влез в клуба
+  text: Обявленията за срещите и въпросите са в Discord сървъра на клуба.
+  cta: Влез в Discord
+footer:
+  contactLabel: Контакт
+  email: kiril.l.rangelov.2022@elsys-bg.org
+  links:
+    - label: Код на сайта
+      href: https://github.com/rangelovkiril/devops-club-site
+    - label: elsys.club
+      href: https://elsys.club
 ---

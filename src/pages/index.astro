@@ -1,6 +1,8 @@
 ---
 import { getEntry } from "astro:content";
+import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
+import JoinCta from "../components/JoinCta.astro";
 import Meetings from "../components/Meetings.astro";
 import TextSection from "../components/TextSection.astro";
 import Layout from "../layouts/Layout.astro";
@@ -16,6 +18,9 @@ const {
   audience,
   meetings,
   past,
+  maintainer,
+  join,
+  footer,
 } = home.data;
 ---
 
@@ -28,12 +33,32 @@ const {
       hint={hero.hint}
       discordUrl={discordUrl}
     />
-    <TextSection id="about" heading={about.heading} paragraphs={about.paragraphs} />
+    <TextSection
+      id="about"
+      heading={about.heading}
+      paragraphs={about.paragraphs}
+    />
     <TextSection
       id="audience"
       heading={audience.heading}
       paragraphs={audience.paragraphs}
     />
     <Meetings meetings={meetings} pastHeading={past.heading} />
+    <TextSection
+      id="maintainer"
+      heading={maintainer.heading}
+      paragraphs={maintainer.paragraphs}
+    />
+    <JoinCta
+      heading={join.heading}
+      text={join.text}
+      cta={join.cta}
+      discordUrl={discordUrl}
+    />
   </main>
+  <Footer
+    contactLabel={footer.contactLabel}
+    email={footer.email}
+    links={footer.links}
+  />
 </Layout>
