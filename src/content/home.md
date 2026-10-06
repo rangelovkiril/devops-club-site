@@ -67,6 +67,12 @@ notFound:
   title: Страницата не е намерена
   text: Адресът е грешен или страницата вече не съществува.
   back: Към началото
+  terminal:
+    label: Имитация на изход от kubectl
+    output: |-
+      NAME                READY   STATUS         RESTARTS   AGE
+      devops-elsys-club   0/1     ErrImagePull   0          404s
+    log: Back-off pulling image "devops.elsys.club/stranica:latest"
 footer:
   contactLabel: Контакт
   email: kiril.l.rangelov.2022@elsys-bg.org

@@ -54,6 +54,11 @@ const home = defineCollection({
       title: z.string(),
       text: z.string(),
       back: z.string(),
+      terminal: z.object({
+        label: z.string(),
+        output: z.string(),
+        log: z.string(),
+      }),
     }),
     footer: z.object({
       contactLabel: z.string(),

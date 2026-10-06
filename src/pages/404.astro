@@ -9,6 +9,11 @@ const { description, notFound } = home.data;
 
 <Layout title={notFound.title} description={description}>
   <main id="main" class="container">
+    <!-- Контейнерът скролира встрани, за да не изнася страницата (N3). -->
+    <div class="terminal" role="group" tabindex="0" aria-label={notFound.terminal.label}>
+      <pre class="output">{notFound.terminal.output}</pre>
+      <pre class="log">{notFound.terminal.log}</pre>
+    </div>
     <h1>{notFound.title}</h1>
     <p>{notFound.text}</p>
     <p><a href="/">{notFound.back}</a></p>
@@ -17,6 +22,31 @@ const { description, notFound } = home.data;
 
 <style>
   main {
-    padding: var(--space-5) 0;
+    padding: var(--space-4) 0 var(--space-5);
+  }
+
+  .terminal {
+    max-width: 100%;
+    margin-bottom: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+  }
+
+  pre {
+    margin: 0;
+    white-space: pre;
+  }
+
+  .output {
+    font-size: 0.8125rem;
+  }
+
+  .log {
+    margin-top: var(--space-1);
+    color: var(--text-muted);
+    font-size: 0.75rem;
   }
 </style>
