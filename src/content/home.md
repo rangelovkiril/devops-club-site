@@ -37,6 +37,10 @@ join:
   heading: Влез в клуба
   text: Обявленията за срещите и въпросите са в Discord сървъра на клуба.
   cta: Влез в Discord
+notFound:
+  title: Страницата не е намерена
+  text: Адресът е грешен или страницата вече не съществува.
+  back: Към началото
 footer:
   contactLabel: Контакт
   email: kiril.l.rangelov.2022@elsys-bg.org

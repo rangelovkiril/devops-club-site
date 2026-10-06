@@ -36,6 +36,11 @@ const home = defineCollection({
       text: z.string(),
       cta: z.string(),
     }),
+    notFound: z.object({
+      title: z.string(),
+      text: z.string(),
+      back: z.string(),
+    }),
     footer: z.object({
       contactLabel: z.string(),
       email: z.email(),
