@@ -20,7 +20,14 @@ const home = defineCollection({
     }),
     about: section,
     audience: section,
+    meetingsTeaser: z.object({
+      heading: z.string(),
+      text: z.string(),
+      link: z.string(),
+    }),
     meetings: z.object({
+      title: z.string(),
+      description: z.string(),
       heading: z.string(),
       paragraphs: z.array(z.string()).min(1),
       upcomingHeading: z.string(),

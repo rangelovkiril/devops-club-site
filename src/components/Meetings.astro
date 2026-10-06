@@ -31,16 +31,19 @@ const labels = {
 };
 ---
 
-<Section id="meetings" heading={text.heading}>
-  {text.paragraphs.map((p) => <p>{p}</p>)}
+<header class="page-head">
+  <div class="container">
+    <h1>{text.heading}</h1>
+    {text.paragraphs.map((p) => <p>{p}</p>)}
+  </div>
+</header>
+
+<Section id="upcoming" heading={text.upcomingHeading}>
   {
     planned.length > 0 ? (
-      <>
-        <h3>{text.upcomingHeading}</h3>
-        <ul class="list">
-          {planned.map((meeting) => <MeetingItem meeting={meeting} {...labels} />)}
-        </ul>
-      </>
+      <ul class="list">
+        {planned.map((meeting) => <MeetingItem meeting={meeting} {...labels} />)}
+      </ul>
     ) : (
       <div class="soon">
         <h3>{text.emptyTitle}</h3>
@@ -61,6 +64,10 @@ const labels = {
 }
 
 <style>
+  .page-head {
+    padding: var(--space-4) 0;
+  }
+
   .list {
     max-width: none;
     margin: 0;

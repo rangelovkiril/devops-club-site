@@ -1,9 +1,8 @@
 ---
 import { getEntry } from "astro:content";
-import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
 import JoinCta from "../components/JoinCta.astro";
-import Meetings from "../components/Meetings.astro";
+import Section from "../components/Section.astro";
 import TextSection from "../components/TextSection.astro";
 import Layout from "../layouts/Layout.astro";
 
@@ -16,8 +15,7 @@ const {
   hero,
   about,
   audience,
-  meetings,
-  past,
+  meetingsTeaser,
   maintainer,
   join,
   footer,
@@ -43,7 +41,10 @@ const {
       heading={audience.heading}
       paragraphs={audience.paragraphs}
     />
-    <Meetings meetings={meetings} pastHeading={past.heading} />
+    <Section id="meetings" heading={meetingsTeaser.heading}>
+      <p>{meetingsTeaser.text}</p>
+      <p><a href="/meetings">{meetingsTeaser.link}</a></p>
+    </Section>
     <TextSection
       id="maintainer"
       heading={maintainer.heading}
@@ -56,9 +57,4 @@ const {
       discordUrl={discordUrl}
     />
   </main>
-  <Footer
-    contactLabel={footer.contactLabel}
-    email={footer.email}
-    links={footer.links}
-  />
 </Layout>

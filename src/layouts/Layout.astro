@@ -1,4 +1,6 @@
 ---
+import { getEntry } from "astro:content";
+import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -7,6 +9,10 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+
+const home = await getEntry("home", "home");
+if (!home) throw new Error("src/content/home.md is missing");
+const { footer } = home.data;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const image = new URL(
@@ -56,6 +62,11 @@ const image = new URL(
   <body>
     <a class="skip-link" href="#main">Към съдържанието</a>
     <slot />
+    <Footer
+      contactLabel={footer.contactLabel}
+      email={footer.email}
+      links={footer.links}
+    />
   </body>
 </html>
 

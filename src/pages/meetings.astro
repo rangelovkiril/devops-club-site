@@ -1,0 +1,15 @@
+---
+import { getEntry } from "astro:content";
+import Meetings from "../components/Meetings.astro";
+import Layout from "../layouts/Layout.astro";
+
+const home = await getEntry("home", "home");
+if (!home) throw new Error("src/content/home.md is missing");
+const { meetings, past } = home.data;
+---
+
+<Layout title={meetings.title} description={meetings.description}>
+  <main id="main">
+    <Meetings meetings={meetings} pastHeading={past.heading} />
+  </main>
+</Layout>
