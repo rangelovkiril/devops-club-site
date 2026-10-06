@@ -48,4 +48,14 @@ const { title, lead, cta, hint, discordUrl } = Astro.props;
     color: var(--text-muted);
     font-size: 0.875rem;
   }
+
+  @media (min-width: 64rem) {
+    .hero {
+      padding: var(--space-5) 0 6rem;
+    }
+
+    .lead {
+      font-size: 1.25rem;
+    }
+  }
 </style>

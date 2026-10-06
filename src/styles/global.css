@@ -49,7 +49,8 @@
   --space-5: 4rem;
 
   --measure: 65ch;
-  --page-width: 48rem;
+  --page-width: 68.75rem;
+  --gutter: 1rem;
 }
 
 *,
@@ -133,19 +134,41 @@ svg {
   font-family: var(--font-display);
 }
 
+.container {
+  width: min(100% - 2 * var(--gutter), var(--page-width));
+  margin-inline: auto;
+}
+
+/*
+ * Два прага: 640 (таблет) и 1024 (десктоп). Контейнерът расте, но текстът
+ * вътре остава в --measure (T1), така че расте само пластът около него.
+ */
 @media (min-width: 40rem) {
+  :root {
+    --gutter: 2rem;
+  }
+
   h1 {
     font-size: 2.5rem;
   }
 
   h2 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 }
 
-.container {
-  width: min(100% - 2rem, var(--page-width));
-  margin-inline: auto;
+@media (min-width: 64rem) {
+  :root {
+    --gutter: 4rem;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
 }
 
 /* Номерата на секциите са чист CSS: добавянето на секция не иска преномериране. */
@@ -162,4 +185,18 @@ main {
   font-family: var(--font-display);
   font-size: 0.875rem;
   font-weight: 500;
+}
+
+/* На широк екран номерът виси вляво от заглавието, в полето на контейнера. */
+@media (min-width: 64rem) {
+  .section h2 {
+    display: flex;
+    align-items: baseline;
+    margin-left: -3rem;
+  }
+
+  .section h2::before {
+    flex: 0 0 3rem;
+    margin-bottom: 0;
+  }
 }

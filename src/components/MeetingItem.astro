@@ -38,7 +38,7 @@ const when = [dateText, time, room && `${roomLabel} ${room}`].filter(Boolean);
 
 <style>
   .item {
-    max-width: var(--measure);
+    max-width: var(--card-max, var(--measure));
     margin-bottom: var(--space-2);
     padding: var(--space-2) var(--space-3);
     background: var(--surface);
