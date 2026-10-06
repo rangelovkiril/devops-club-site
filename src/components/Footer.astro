@@ -13,7 +13,7 @@ const { contactLabel, email, links } = Astro.props;
 <footer class="footer">
   <div class="container">
     <div class="logo"><Logo variant="compact" width="9rem" /></div>
-    <p>{contactLabel}: <a href={`mailto:${email}`}>{email}</a></p>
+    <p>{contactLabel}: <a class="email" href={`mailto:${email}`}>{email}</a></p>
     <ul class="links">
       {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
     </ul>
@@ -29,6 +29,11 @@ const { contactLabel, email, links } = Astro.props;
 
   .logo {
     margin-bottom: var(--space-3);
+  }
+
+  /* Без преноса на тирето домейнът се чете като elsys-/bg.org. */
+  .email {
+    white-space: nowrap;
   }
 
   .links {
