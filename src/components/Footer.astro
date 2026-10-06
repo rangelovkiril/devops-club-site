@@ -1,4 +1,6 @@
 ---
+import Logo from "./Logo.astro";
+
 interface Props {
   contactLabel: string;
   email: string;
@@ -10,13 +12,7 @@ const { contactLabel, email, links } = Astro.props;
 
 <footer class="footer">
   <div class="container">
-    <img
-      class="logo"
-      src="/brand/wordmark-compact-on-dark.svg"
-      alt="TUES DevOps"
-      width="505"
-      height="160"
-    />
+    <div class="logo"><Logo variant="compact" width="9rem" /></div>
     <p>{contactLabel}: <a href={`mailto:${email}`}>{email}</a></p>
     <ul class="links">
       {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
@@ -32,7 +28,6 @@ const { contactLabel, email, links } = Astro.props;
   }
 
   .logo {
-    width: 9rem;
     margin-bottom: var(--space-3);
   }
 

@@ -14,13 +14,6 @@ const { title, lead, cta, hint, discordUrl } = Astro.props;
 
 <header class="hero">
   <div class="container">
-    <img
-      class="logo"
-      src="/brand/wordmark-on-dark.svg"
-      alt="TUES DevOps"
-      width="505"
-      height="200"
-    />
     <h1>{title}</h1>
     <p class="lead">{lead}</p>
     <DiscordButton href={discordUrl} label={cta} />
@@ -31,11 +24,6 @@ const { title, lead, cta, hint, discordUrl } = Astro.props;
 <style>
   .hero {
     padding: var(--space-4) 0 var(--space-5);
-  }
-
-  .logo {
-    width: 14rem;
-    margin-bottom: var(--space-3);
   }
 
   .lead {

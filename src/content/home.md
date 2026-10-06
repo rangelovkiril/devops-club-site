@@ -43,6 +43,13 @@ join:
   heading: Влез в клуба
   text: Обявленията за срещите и въпросите са в Discord сървъра на клуба.
   cta: Влез в Discord
+nav:
+  label: Основна навигация
+  links:
+    - label: Начало
+      href: /
+    - label: Срещи
+      href: /meetings
 notFound:
   title: Страницата не е намерена
   text: Адресът е грешен или страницата вече не съществува.

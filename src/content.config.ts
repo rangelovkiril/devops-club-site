@@ -43,6 +43,12 @@ const home = defineCollection({
       text: z.string(),
       cta: z.string(),
     }),
+    nav: z.object({
+      label: z.string(),
+      links: z
+        .array(z.object({ label: z.string(), href: z.string() }))
+        .length(2),
+    }),
     notFound: z.object({
       title: z.string(),
       text: z.string(),

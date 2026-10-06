@@ -1,0 +1,78 @@
+---
+import Logo from "./Logo.astro";
+
+interface Props {
+  label: string;
+  links: { label: string; href: string }[];
+}
+
+const { label, links } = Astro.props;
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/"><Logo variant="full" width="9rem" /></a>
+    <nav aria-label={label}>
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={isCurrent(link.href) ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .bar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+    padding: var(--space-2) 0;
+  }
+
+  .brand {
+    display: block;
+  }
+
+  ul {
+    display: flex;
+    gap: var(--space-3);
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  nav a[aria-current="page"] {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  @media (min-width: 40rem) {
+    .bar {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+</style>
