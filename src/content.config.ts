@@ -20,6 +20,7 @@ const home = defineCollection({
     }),
     about: section,
     audience: section,
+    topics: section.extend({ areas: z.array(z.string()).min(1) }),
     meetingsTeaser: z.object({
       heading: z.string(),
       text: z.string(),

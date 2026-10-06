@@ -4,6 +4,7 @@ import Hero from "../components/Hero.astro";
 import JoinCta from "../components/JoinCta.astro";
 import Section from "../components/Section.astro";
 import TextSection from "../components/TextSection.astro";
+import Topics from "../components/Topics.astro";
 import Layout from "../layouts/Layout.astro";
 
 const home = await getEntry("home", "home");
@@ -15,6 +16,7 @@ const {
   hero,
   about,
   audience,
+  topics,
   meetingsTeaser,
   maintainer,
   join,
@@ -40,6 +42,12 @@ const {
       id="audience"
       heading={audience.heading}
       paragraphs={audience.paragraphs}
+    />
+    <Topics
+      id="topics"
+      heading={topics.heading}
+      paragraphs={topics.paragraphs}
+      areas={topics.areas}
     />
     <Section id="meetings" heading={meetingsTeaser.heading}>
       <p>{meetingsTeaser.text}</p>
