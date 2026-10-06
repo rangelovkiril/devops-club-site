@@ -1,12 +1,21 @@
 ---
+import { getEntry } from "astro:content";
+import Hero from "../components/Hero.astro";
 import Layout from "../layouts/Layout.astro";
+
+const home = await getEntry("home", "home");
+if (!home) throw new Error("src/content/home.md is missing");
+const { title, description, discordUrl, hero } = home.data;
 ---
 
-<Layout
-  title="DevOps клуб ТУЕС"
-  description="Клуб за DevOps в ТУЕС. Лекции и практика, без изискване за предварителни знания."
->
+<Layout title={title} description={description}>
   <main id="main">
-    <h1>DevOps клуб ТУЕС</h1>
+    <Hero
+      title={title}
+      lead={hero.lead}
+      cta={hero.cta}
+      hint={hero.hint}
+      discordUrl={discordUrl}
+    />
   </main>
 </Layout>

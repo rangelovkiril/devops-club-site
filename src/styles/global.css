@@ -142,3 +142,8 @@ svg {
     font-size: 1.75rem;
   }
 }
+
+.container {
+  width: min(100% - 2rem, var(--page-width));
+  margin-inline: auto;
+}
