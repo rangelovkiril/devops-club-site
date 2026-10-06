@@ -1,0 +1,144 @@
+/*
+ * Бранд токените идват от /brand/colors.css (зарежда се с <link>).
+ * Тук те се именуват по роля. Светла тема = смяна на този блок.
+ */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-var.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/space-grotesk-var.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+
+  --bg: var(--tues-devops-ink);
+  --text: var(--tues-devops-white);
+  --text-muted: var(--tues-devops-mist);
+  --accent: var(--tues-devops-sky);
+  --action: var(--tues-devops-blue);
+  --on-action: var(--tues-devops-white);
+  --surface: color-mix(
+    in srgb,
+    var(--tues-devops-white) 6%,
+    var(--tues-devops-ink)
+  );
+  --border: color-mix(
+    in srgb,
+    var(--tues-devops-white) 16%,
+    var(--tues-devops-ink)
+  );
+
+  --font-text: var(--tues-devops-font-text);
+  --font-display: var(--tues-devops-font-display);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+
+  --measure: 65ch;
+  --page-width: 48rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 var(--space-2);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+}
+
+p,
+ul,
+ol {
+  max-width: var(--measure);
+  margin: 0 0 var(--space-2);
+}
+
+ul,
+ol {
+  padding-left: 1.25rem;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Space Grotesk няма кирилица: само за латински низове. */
+.latin {
+  font-family: var(--font-display);
+}
+
+@media (min-width: 40rem) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+}

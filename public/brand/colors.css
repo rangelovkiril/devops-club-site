@@ -1,0 +1,12 @@
+/* TUES DevOps — бранд цветове */
+:root {
+  --tues-devops-blue:  #326CE5; /* Kubernetes Blue — колелото, акценти */
+  --tues-devops-ink:   #0B1220; /* основен тъмен фон и текст */
+  --tues-devops-white: #FFFFFF;
+  --tues-devops-slate: #5B6577; /* вторичен текст върху светло */
+  --tues-devops-mist:  #A9B4C7; /* вторичен текст върху тъмно */
+  --tues-devops-sky:   #7FA6F2; /* акцентен текст върху тъмно */
+
+  --tues-devops-font-display: "Space Grotesk", system-ui, sans-serif; /* само латиница */
+  --tues-devops-font-text: "JetBrains Mono", ui-monospace, monospace; /* има кирилица */
+}
