@@ -1,6 +1,10 @@
 /*
  * Бранд токените идват от /brand/colors.css (зарежда се с <link>).
- * Тук те се именуват по роля. Светла тема = смяна на този блок.
+ * Тук те се именуват по роля, в две групи: тъмната е по подразбиране,
+ * светлата се прилага само когато системата я иска. Без JavaScript и
+ * без състояние. Значенията на цветовете по бранд насоките:
+ *   Slate - вторичен текст върху светло, Mist - върху тъмно,
+ *   Sky - акцент само върху тъмно, Blue - бутони и линкове (не дребен текст).
  */
 
 @font-face {
@@ -38,6 +42,7 @@
     var(--tues-devops-white) 16%,
     var(--tues-devops-ink)
   );
+  --kicker: var(--tues-devops-sky);
 
   --font-text: var(--tues-devops-font-text);
   --font-display: var(--tues-devops-font-display);
@@ -48,9 +53,42 @@
   --space-4: 2.5rem;
   --space-5: 4rem;
 
+  --action-hover: color-mix(in srgb, var(--action) 80%, var(--tues-devops-ink));
+
   --measure: 65ch;
   --page-width: 68.75rem;
   --gutter: 1rem;
+}
+
+/* Двете групи светли токени са еднакви: ръчният override и системната настройка. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: var(--tues-devops-white);
+  --text: var(--tues-devops-ink);
+  --text-muted: var(--tues-devops-slate);
+  --accent: var(--tues-devops-blue);
+  --action: var(--tues-devops-blue);
+  --on-action: var(--tues-devops-white);
+  --surface: var(--tues-devops-white);
+  --border: var(--tues-devops-mist);
+  --kicker: var(--tues-devops-slate);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+
+    --bg: var(--tues-devops-white);
+    --text: var(--tues-devops-ink);
+    --text-muted: var(--tues-devops-slate);
+    --accent: var(--tues-devops-blue);
+    --action: var(--tues-devops-blue);
+    --on-action: var(--tues-devops-white);
+    --surface: var(--tues-devops-white);
+    --border: var(--tues-devops-mist);
+    --kicker: var(--tues-devops-slate);
+  }
 }
 
 *,
@@ -181,7 +219,7 @@ main {
   content: counter(section, decimal-leading-zero);
   display: block;
   margin-bottom: var(--space-1);
-  color: var(--accent);
+  color: var(--kicker);
   font-family: var(--font-display);
   font-size: 0.875rem;
   font-weight: 500;

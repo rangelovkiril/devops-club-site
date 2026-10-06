@@ -10,10 +10,17 @@ const name = variant === "full" ? "wordmark" : "wordmark-compact";
 const height = variant === "full" ? 200 : 160;
 ---
 
-<img
-  src={`/brand/${name}-on-dark.svg`}
-  alt="TUES DevOps"
-  width="505"
-  height={height}
-  style={`width: ${width}`}
-/>
+<!-- Знакът се сменя с отделен файл, не с filter (бранд насоки). -->
+<picture>
+  <source
+    srcset={`/brand/${name}-on-light.svg`}
+    media="(prefers-color-scheme: light)"
+  />
+  <img
+    src={`/brand/${name}-on-dark.svg`}
+    alt="TUES DevOps"
+    width="505"
+    height={height}
+    style={`width: ${width}`}
+  />
+</picture>
