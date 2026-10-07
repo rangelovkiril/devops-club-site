@@ -2,7 +2,6 @@
 import Logo from "./Logo.astro";
 
 interface Props {
-  tagline: string;
   email: string;
   contact: string;
   discord: { label: string; href: string };
@@ -10,7 +9,7 @@ interface Props {
   gap: number;
 }
 
-const { tagline, email, contact, discord, links, gap } = Astro.props;
+const { email, contact, discord, links, gap } = Astro.props;
 
 // Пренос само след @: адресът не се къса насред домейна или името,
 // включително по тирето в elsys-bg.org.
@@ -42,7 +41,6 @@ const icons = {
   <div class="w fg">
     <div class="fl">
       <Logo />
-      <p>{tagline}</p>
     </div>
     <ul class="fd">
       <li>
@@ -79,13 +77,6 @@ const icons = {
     gap: 32px;
     padding-top: 48px;
     padding-bottom: max(32px, env(safe-area-inset-bottom));
-  }
-
-  .fl p {
-    margin: 16px 0 0;
-    color: var(--muted);
-    font-size: 15px;
-    max-width: 34ch;
   }
 
   .fd {

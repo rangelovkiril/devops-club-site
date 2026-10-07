@@ -56,7 +56,6 @@ const home = defineCollection({
       }),
     }),
     footer: z.object({
-      tagline: z.string(),
       email: z.email(),
       contact: z.string(),
       discord: z.string(),

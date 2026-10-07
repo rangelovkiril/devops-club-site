@@ -49,7 +49,6 @@ routes:
     title: Discord
     text: Тук вземаме решения за срещите и за клуба
 footer:
-  tagline: Ученически DevOps клуб в ТУЕС.
   email: kiril.l.rangelov.2022@elsys-bg.org
   contact: Свържи се с нас
   discord: Влез в Discord

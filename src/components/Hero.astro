@@ -42,31 +42,52 @@ const { prompt, title, quote, cta, more, discordUrl } = Astro.props;
     color: var(--muted);
   }
 
+  /*
+   * Двата линка са винаги на един ред: шрифтът следва наличната ширина.
+   * Двата текста са 14 + 16 знака (+ 1 знак между текста и стрелката), в
+   * моноширинен шрифт (0.6 em на знак), линкът е 1.12 пъти по-едър от
+   * бутона: 0.6 * (14 + 16 * 1.12) = 19.15, закръглено на 19.5 за запас.
+   * --avail е ширината на лявата колона.
+   */
+  .hero {
+    --avail: calc(100vw - 40px);
+    --pad: min(18px, 4.5vw);
+    --gap: min(20px, 3.5vw);
+    --fmax: 17px;
+    --f: min(
+      var(--fmax),
+      calc((var(--avail) - 2 * var(--pad) - var(--gap)) / 19.5)
+    );
+  }
+
   .actions {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 0 28px;
+    gap: 0 var(--gap);
+    white-space: nowrap;
   }
 
   .actions > :global(.btn) {
     flex: none;
+    padding: 0 var(--pad);
+    font-size: var(--f);
   }
 
-  /* Без рамка и фон, но по-едър от бутона (17/18 px): да не изчезва до него. */
+  /* Без рамка и фон, но по-едър от бутона: да не изчезва до него. */
   .more {
     display: inline-flex;
     align-items: center;
     gap: 1ch;
     min-height: 56px;
-    font-size: 19px;
+    font-size: calc(var(--f) * 1.12);
     font-weight: 700;
     text-decoration: none;
   }
 
   .lbl {
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-underline-offset: 7px;
+    text-decoration-skip-ink: auto;
   }
 
   /*
@@ -81,6 +102,10 @@ const { prompt, title, quote, cta, more, discordUrl } = Astro.props;
     .hero {
       --h1-size: 80px;
       --h1-lh: 1.02;
+      --avail: calc((min(100vw, 1200px) - 160px) * 7 / 12);
+      --pad: 32px;
+      --gap: 28px;
+      --fmax: 18px;
 
       grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
       grid-template-rows: auto auto 1fr auto;
@@ -141,8 +166,8 @@ const { prompt, title, quote, cta, more, discordUrl } = Astro.props;
       grid-row: 4;
     }
 
-    .more {
-      font-size: 20px;
+    .lbl {
+      text-underline-offset: 5px;
     }
   }
 </style>
