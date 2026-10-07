@@ -20,13 +20,14 @@ const others = nav.links.filter((link) => link.href !== "/");
     <Terminal command="kubectl describe pod devops-elsys-club">
       <dl>
         <dt>Name:</dt><dd>devops-elsys-club</dd>
+        <dt>Image:</dt><dd>devops.elsys.club/<span id="pn">page</span>:latest</dd>
         <dt>Ready:</dt><dd>0/1</dd>
         <dt>Status:</dt><dd class="bad">ErrImagePull</dd>
         <dt>Restarts:</dt><dd>0</dd>
         <dt>Age:</dt><dd>404s</dd>
       </dl>
       <p class="evt">
-        Events:<span>Back-off pulling image "devops.elsys.club/page:latest"</span>
+        Events:<span>Back-off pulling image "devops.elsys.club/<span id="pn2">page</span>:latest"</span>
       </p>
     </Terminal>
     <div class="go">
@@ -36,6 +37,14 @@ const others = nav.links.filter((link) => link.href !== "/");
       </div>
     </div>
   </div>
+  <!-- Единственият JS на сайта (N2): без него в блока остава "page". -->
+  <script is:inline>
+    var slug = location.pathname.replace(/[^\w-]/g, "").slice(0, 40);
+    if (slug) {
+      document.getElementById("pn").textContent = slug;
+      document.getElementById("pn2").textContent = slug;
+    }
+  </script>
 </Layout>
 
 <style>
@@ -85,7 +94,7 @@ const others = nav.links.filter((link) => link.href !== "/");
     color: var(--muted);
   }
 
-  .evt span {
+  .evt > span {
     display: block;
     color: var(--fg);
     padding-left: 2ch;
