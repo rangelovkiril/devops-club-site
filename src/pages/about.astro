@@ -13,6 +13,7 @@ const about = await getAbout();
 const { discordUrl, footer } = await getHome();
 const { planned, past } = await getMeetings();
 const sections = ["who", "topics", "speakers", "faq"];
+const [mailLocal, mailDomain] = footer.email.split("@");
 ---
 
 <Layout title={about.title} description={about.description} footerGap={48}>
@@ -52,7 +53,8 @@ const sections = ["who", "topics", "speakers", "faq"];
       {about.speakers.paragraphs.map((text) => <p>{text}</p>)}
       <Button href={discordUrl} label={about.speakers.cta} />
       <a class="mail" href={`mailto:${footer.email}`}>
-        {about.speakers.mail} {footer.email}
+        {about.speakers.mail}{" "}
+        <span class="nb">{mailLocal}@</span><wbr /><span class="nb">{mailDomain}</span>
       </a>
     </div>
   </AnchorSection>
@@ -96,6 +98,10 @@ const sections = ["who", "topics", "speakers", "faq"];
     padding: 10px 0;
     font-size: 15px;
     overflow-wrap: anywhere;
+  }
+
+  .nb {
+    white-space: nowrap;
   }
 
   @media (min-width: 900px) {
