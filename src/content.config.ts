@@ -52,9 +52,14 @@ const home = defineCollection({
     footer: z.object({
       tagline: z.string(),
       email: z.email(),
+      contact: z.string(),
       discord: z.string(),
       links: z.array(
-        z.object({ key: z.string(), label: z.string(), href: z.url() }),
+        z.object({
+          key: z.enum(["source", "network"]),
+          label: z.string(),
+          href: z.url(),
+        }),
       ),
     }),
     notFound: z.object({

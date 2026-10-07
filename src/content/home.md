@@ -46,13 +46,14 @@ routes:
 footer:
   tagline: Ученически DevOps клуб в ТУЕС.
   email: kiril.l.rangelov.2022@elsys-bg.org
-  discord: Влез в сървъра
+  contact: Свържи се с нас
+  discord: Влез в Discord
   links:
     - key: source
-      label: Код на сайта
+      label: Виж кода на сайта
       href: https://github.com/rangelovkiril/devops-club-site
     - key: network
-      label: elsys.club
+      label: Разгледай други клубове
       href: https://elsys.club
 notFound:
   title: Страницата не е намерена
