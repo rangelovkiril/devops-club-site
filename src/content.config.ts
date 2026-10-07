@@ -49,7 +49,11 @@ const home = defineCollection({
           }),
         )
         .min(1),
-      discord: z.object({ cmd: z.string(), title: z.string() }),
+      discord: z.object({
+        cmd: z.string(),
+        title: z.string(),
+        text: z.string(),
+      }),
     }),
     footer: z.object({
       tagline: z.string(),

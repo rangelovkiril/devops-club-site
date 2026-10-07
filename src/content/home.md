@@ -36,17 +36,18 @@ events:
 routes:
   label: Подстраници
   items:
-    - cmd: cd meetings
-      href: /meetings
-      title: Срещи
-      text: Предстоящата среща и архив с материали от досегашните.
     - cmd: cd about
       href: /about
       title: За клуба
-      text: Теми, за кого е клубът и как да изнесеш лекция.
+      text: Информация за клуба и често задавани въпроси
+    - cmd: cd meetings
+      href: /meetings
+      title: Срещи
+      text: Предстоящи срещи и материали от минали
   discord:
     cmd: xdg-open
-    title: Влез в Discord
+    title: Discord
+    text: Тук вземаме решения за срещите и за клуба
 footer:
   tagline: Ученически DevOps клуб в ТУЕС.
   email: kiril.l.rangelov.2022@elsys-bg.org

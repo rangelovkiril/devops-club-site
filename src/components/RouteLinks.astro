@@ -2,7 +2,7 @@
 interface Props {
   label: string;
   items: { cmd: string; href: string; title: string; text: string }[];
-  discord: { cmd: string; title: string; href: string };
+  discord: { cmd: string; title: string; text: string; href: string };
 }
 
 const { label, items, discord } = Astro.props;
@@ -22,6 +22,7 @@ const { label, items, discord } = Astro.props;
     <a class="rt ext" href={discord.href}>
       <span class="path">{discord.cmd}</span>
       <span class="ttl">{discord.title}</span>
+      <span class="ds">{discord.text}</span>
     </a>
   </div>
 </nav>
@@ -53,13 +54,9 @@ const { label, items, discord } = Astro.props;
     line-height: 1.1;
     text-decoration: underline;
     text-decoration-thickness: 2px;
-    text-underline-offset: 6px;
+    text-underline-offset: 10px;
+    text-decoration-skip-ink: auto;
     text-decoration-color: var(--blue);
-  }
-
-  .rt.ext {
-    margin-top: 32px;
-    border-top: 1px solid var(--accent);
   }
 
   .rt.ext .ttl {
@@ -68,6 +65,7 @@ const { label, items, discord } = Astro.props;
   }
 
   .rt .ds {
+    font-size: 18px;
     color: var(--muted);
     max-width: 52ch;
   }
@@ -82,6 +80,11 @@ const { label, items, discord } = Astro.props;
 
     .rt .ttl {
       font-size: 44px;
+      text-underline-offset: 6px;
+    }
+
+    .rt .ds {
+      font-size: 20px;
     }
   }
 </style>
