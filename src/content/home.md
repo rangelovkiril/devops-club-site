@@ -39,7 +39,7 @@ routes:
     - cmd: cd about
       href: /about
       title: За клуба
-      text: Информация за клуба и често задавани въпроси
+      text: Информация за клуба и FAQ
     - cmd: cd meetings
       href: /meetings
       title: Срещи
