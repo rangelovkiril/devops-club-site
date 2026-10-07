@@ -56,9 +56,7 @@ const when = (meeting: (typeof planned)[number]) => {
     {
       past.length > 0 && (
         <>
-          <h2 class="lbl">
-            {page.past} <span class="sfx">· git log</span>
-          </h2>
+          <h2 class="lbl">{page.past}</h2>
           <MeetingAccordion
             meetings={past}
             topics={topics.items}
@@ -80,10 +78,6 @@ const when = (meeting: (typeof planned)[number]) => {
     color: var(--muted);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-  }
-
-  .sfx {
-    text-transform: none;
   }
 
   .ups {

@@ -10,6 +10,9 @@ interface Props {
 }
 
 const { tagline, email, discord, links, gap } = Astro.props;
+
+// Пренос само след @: адресът не се къса насред домейна или името.
+const [local, domain] = email.split("@");
 ---
 
 <footer class="f" style={`margin-top: ${gap}px`}>
@@ -20,7 +23,7 @@ const { tagline, email, discord, links, gap } = Astro.props;
     </div>
     <dl class="fd">
       <dt>contact</dt>
-      <dd><a href={`mailto:${email}`}>{email}</a></dd>
+      <dd><a class="mail" href={`mailto:${email}`}>{local}@<wbr />{domain}</a></dd>
       <dt>discord</dt>
       <dd><a href={discord.href}>{discord.label}</a></dd>
       {
@@ -45,7 +48,7 @@ const { tagline, email, discord, links, gap } = Astro.props;
     display: grid;
     gap: 32px;
     padding-top: 48px;
-    padding-bottom: 32px;
+    padding-bottom: max(32px, env(safe-area-inset-bottom));
   }
 
   .fl p {
@@ -74,6 +77,11 @@ const { tagline, email, discord, links, gap } = Astro.props;
     overflow-wrap: anywhere;
   }
 
+  /* Под 900 px ширината за адреса е 193–248 px: по-малък размер, за да се събере частта преди @. */
+  .mail {
+    font-size: 14px;
+  }
+
   .exit {
     margin: 0;
     padding-top: 20px;
@@ -87,6 +95,10 @@ const { tagline, email, discord, links, gap } = Astro.props;
   }
 
   @media (min-width: 900px) {
+    .mail {
+      font-size: inherit;
+    }
+
     .fg {
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
       column-gap: 48px;

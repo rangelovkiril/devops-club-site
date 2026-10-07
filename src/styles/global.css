@@ -15,14 +15,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("/fonts/space-grotesk-var.woff2") format("woff2");
-  font-weight: 300 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   color-scheme: dark;
 
@@ -35,7 +27,6 @@
   --on-blue: var(--tues-devops-white);
 
   --font-text: var(--tues-devops-font-text);
-  --font-display: var(--tues-devops-font-display);
 }
 
 /* Двете групи светли токени са еднакви: ръчният override и системната настройка. */
@@ -92,16 +83,11 @@ summary:focus-visible {
   line-height: 1.6;
 }
 
-/* Space Grotesk няма кирилица: само за латински низове. */
-.latin {
-  font-family: var(--font-display);
-}
-
 .w {
   max-width: 1200px;
   margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
   box-sizing: border-box;
 }
 
@@ -126,8 +112,8 @@ h1 {
 /* Един праг, както в тарбола. */
 @media (min-width: 900px) {
   .w {
-    padding-left: 48px;
-    padding-right: 48px;
+    padding-left: max(48px, env(safe-area-inset-left));
+    padding-right: max(48px, env(safe-area-inset-right));
   }
 
   h1 {
