@@ -70,14 +70,20 @@ const { prompt, title, quote, cta, more, discordUrl } = Astro.props;
   }
 
   /*
-   * Подканата е над заглавието. Конзолата започва от базовата линия на
-   * първия ред на заглавието: .intro се разгръща в мрежата на hero-а и
-   * h1 и конзолата са в един ред, подравнени по първата базова линия.
+   * От 900 px горният ръб на конзолата е върхът на главните букви на
+   * заглавието (подканата остава над него), а долният ръб на бутоните е
+   * долният ръб на конзолата. .intro се разгръща в мрежата на hero-а:
+   * заглавието и конзолата започват от един ред, а редът на цитата поема
+   * излишната височина. Конзолата не се разтяга: ако е по-ниска от лявата
+   * колона, долните ръбове не съвпадат, но нищо не се чупи.
    */
   @media (min-width: 900px) {
     .hero {
+      --h1-size: 80px;
+      --h1-lh: 1.02;
+
       grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      grid-template-rows: auto auto auto auto 1fr;
+      grid-template-rows: auto auto 1fr auto;
       column-gap: 64px;
       row-gap: 0;
       padding-top: 112px;
@@ -89,27 +95,45 @@ const { prompt, title, quote, cta, more, discordUrl } = Astro.props;
       display: contents;
     }
 
-    .hero > :global(.term) {
-      grid-column: 2;
-      grid-row: 2 / 6;
-      align-self: first baseline;
+    /* Без leading над първия ред: кутията започва от върха на главните. */
+    .hero .prompt {
+      --lh: 1.6;
+      grid-column: 1;
+      grid-row: 1;
+      line-height: var(--lh);
+      margin-top: calc((var(--lh) - 1.32) / 2 * -1em - 0.286em);
+    }
+
+    @supports (text-box: trim-start cap alphabetic) {
+      .hero .prompt {
+        margin-top: 0;
+        text-box: trim-start cap alphabetic;
+      }
     }
 
     .hero h1 {
       grid-column: 1;
       grid-row: 2;
-      align-self: first baseline;
+      font-size: var(--h1-size);
+      line-height: var(--h1-lh);
     }
 
-    .hero .prompt {
-      grid-column: 1;
-      grid-row: 1;
+    /*
+     * Надолу от върха на реда на заглавието до върха на главните:
+     * half-leading (lh - 1.32) / 2 плюс 1.02 - 0.734 = 0.286 (метриките на
+     * JetBrains Mono, виж DECISIONS.md).
+     */
+    .hero > :global(.term) {
+      grid-column: 2;
+      grid-row: 2 / 5;
+      margin-top: calc(((var(--h1-lh) - 1.32) / 2 + 0.286) * var(--h1-size));
     }
 
     .quote {
       grid-column: 1;
       grid-row: 3;
       font-size: 21px;
+      margin-bottom: 40px;
     }
 
     .actions {
