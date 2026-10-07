@@ -1,6 +1,6 @@
 ---
 interface Props {
-  command: string;
+  command?: string;
   label?: string;
 }
 
@@ -8,7 +8,7 @@ const { command, label } = Astro.props;
 ---
 
 <div class="term" role={label ? "group" : undefined} aria-label={label}>
-  <p class="cmd"><b>$</b> {command}</p>
+  <p class="cmd"><b>$</b> <slot name="command">{command}</slot></p>
   <slot />
 </div>
 
