@@ -9,10 +9,13 @@ nav:
   links:
     - label: Начало
       href: /
+      dir: ~/devops
     - label: Срещи
       href: /meetings
+      dir: ~/devops/meetings
     - label: За клуба
       href: /about
+      dir: ~/devops/about
 hero:
   prompt: ~/devops $
   lead: Как софтуерът стига от лаптопа до сървъра. Контейнери, автоматизация, инфраструктура.

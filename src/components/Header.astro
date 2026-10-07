@@ -4,7 +4,7 @@ import Logo from "./Logo.astro";
 interface Props {
   label: string;
   menuLabel: string;
-  links: { label: string; href: string }[];
+  links: { label: string; href: string; dir: string }[];
   discord: { label: string; href: string };
 }
 
@@ -41,13 +41,13 @@ const isCurrent = (href: string) =>
             href={link.href}
             aria-current={isCurrent(link.href) ? "page" : undefined}
           >
-            <span class="path">cd {link.href}</span>
+            <span class="path">cd {link.dir}</span>
             <span class="ttl">{link.label}</span>
           </a>
         ))
       }
       <a class="ext" href={discord.href}>
-        <span class="path">xdg-open {discord.href}</span>
+        <span class="path">xdg-open</span>
         <span class="ttl">{discord.label}</span>
       </a>
     </nav>

@@ -2,7 +2,11 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
-const link = z.object({ label: z.string(), href: z.string() });
+const link = z.object({
+  label: z.string(),
+  href: z.string(),
+  dir: z.string(),
+});
 
 const home = defineCollection({
   loader: glob({ base: "./src/content", pattern: "home.md" }),
