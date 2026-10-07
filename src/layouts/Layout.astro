@@ -1,19 +1,23 @@
 ---
-import { getEntry } from "astro:content";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import { getHome } from "../lib/content";
 import "../styles/global.css";
 
 interface Props {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+  footerGap?: number;
 }
 
-const { title, description } = Astro.props;
-
-const home = await getEntry("home", "home");
-if (!home) throw new Error("src/content/home.md is missing");
-const { footer, nav } = home.data;
+const home = await getHome();
+const { footer, nav } = home;
+const {
+  title: pageTitle,
+  description = home.description,
+  footerGap = 96,
+} = Astro.props;
+const title = pageTitle ? `${pageTitle} · ${home.title}` : home.title;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const image = new URL(
@@ -46,7 +50,7 @@ const image = new URL(
     />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="DevOps клуб ТУЕС" />
+    <meta property="og:site_name" content={home.title} />
     <meta property="og:locale" content="bg_BG" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -62,25 +66,34 @@ const image = new URL(
     <meta name="twitter:image" content={image} />
   </head>
   <body>
-    <a class="skip-link" href="#main">Към съдържанието</a>
-    <Header label={nav.label} links={nav.links} />
-    <slot />
-    <Footer
-      contactLabel={footer.contactLabel}
-      email={footer.email}
-      links={footer.links}
-    />
+    <div class="p">
+      <a class="skip-link" href="#main">Към съдържанието</a>
+      <Header
+        label={nav.label}
+        menuLabel={nav.menuLabel}
+        links={nav.links}
+        discord={{ label: nav.discord, href: home.discordUrl }}
+      />
+      <main id="main"><slot /></main>
+      <Footer
+        tagline={footer.tagline}
+        email={footer.email}
+        discord={{ label: footer.discord, href: home.discordUrl }}
+        links={footer.links}
+        gap={footerGap}
+      />
+    </div>
   </body>
 </html>
 
 <style>
   .skip-link {
     position: absolute;
-    left: var(--space-2);
-    top: var(--space-2);
-    padding: var(--space-1) var(--space-2);
-    background: var(--action);
-    color: var(--on-action);
+    left: 8px;
+    top: 8px;
+    padding: 8px 16px;
+    background: var(--blue);
+    color: var(--on-blue);
     transform: translateY(-200%);
   }
 

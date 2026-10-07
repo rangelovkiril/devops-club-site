@@ -1,0 +1,35 @@
+---
+interface Props {
+  href: string;
+  label: string;
+}
+
+const { href, label } = Astro.props;
+---
+
+<a class="btn" href={href}>{label}</a>
+
+<style>
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 56px;
+    padding: 0 28px;
+    box-sizing: border-box;
+    background: var(--blue);
+    color: var(--on-blue);
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 6px;
+  }
+
+  @media (min-width: 900px) {
+    .btn {
+      display: inline-flex;
+      font-size: 18px;
+      padding: 0 32px;
+    }
+  }
+</style>

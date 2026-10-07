@@ -1,38 +1,51 @@
 ---
 title: DevOps клуб ТУЕС
-description: Клуб за ученици, които искат да разберат как софтуерът стига от лаптопа до сървъра. Без изискване за предварителни знания.
+description: Ученически DevOps клуб в ТУЕС. Срещите се обявяват в Discord.
 discordUrl: https://discord.gg/F4GwberfCp
+nav:
+  label: Основна навигация
+  menuLabel: Меню
+  discord: Влез в Discord
+  links:
+    - label: Начало
+      href: /
+    - label: Срещи
+      href: /meetings
+    - label: За клуба
+      href: /about
 hero:
-  lead: Клуб за ученици, които искат да разберат как софтуерът стига от лаптопа до сървъра. Контейнери, автоматизация, инфраструктура.
+  prompt: ~/devops $
+  lead: Как софтуерът стига от лаптопа до сървъра. Контейнери, автоматизация, инфраструктура.
   cta: Влез в Discord
   hint: Там обявяваме срещите и отговаряме на въпроси.
-about:
-  heading: За клуба
-  paragraphs:
-    - DevOps клубът е ученическа група в ТУЕС. Разглеждаме как приложенията се пишат, пакетират, тестват и пускат и какво се случва с тях след това.
-    - Срещите са лекции с практически примери. Материалите от тях са отворени и можеш да ги прегледаш и без да си присъствал.
-audience:
-  heading: За кого е
-  paragraphs:
-    - За ученици от 9. до 11. клас в ТУЕС. Не се иска предварително знание и няма изискване за ниво. Достатъчно е да си любопитен.
-    - Не е нужно да знаеш Linux, Docker или облаци. Започваме от основите и въпросите са нормална част от срещите.
-topics:
-  heading: Какво караме
-  paragraphs:
-    - Срещите се въртят около тези области. Това не е програма и не обещава ред или дати.
-    - Конкретните теми се избират заедно с хората в клуба.
-  areas:
-    - Linux и команден ред
-    - Контейнери
-    - CI/CD и автоматизация
-    - Мрежи и как стига заявката до сървъра
-    - Облак и Kubernetes
-    - Инфраструктура като код
-    - Наблюдаемост
-meetingsTeaser:
-  heading: Срещи
-  text: Лекции с практически примери. Предстоящите срещи и архивът с материали от досегашните са на отделна страница.
-  link: Към срещите
+events:
+  label: Последни събития в клуба
+  command: kubectl get events -n devops
+  columns: [Кога, Статус, Събитие]
+  soon: скоро
+  pending: Pending
+  pendingText: Следващата среща — обявява се в Discord
+  completed: Completed
+routes:
+  label: Подстраници
+  items:
+    - href: /meetings
+      title: Срещи
+      text: Предстоящата среща и архив с материали от досегашните.
+    - href: /about
+      title: За клуба
+      text: Теми, за кого е клубът и как да изнесеш лекция.
+footer:
+  tagline: Ученически DevOps клуб в ТУЕС.
+  email: kiril.l.rangelov.2022@elsys-bg.org
+  discord: Влез в сървъра
+  links:
+    - key: source
+      label: Код на сайта
+      href: https://github.com/rangelovkiril/devops-club-site
+    - key: network
+      label: elsys.club
+      href: https://elsys.club
 meetings:
   title: Срещи | DevOps клуб ТУЕС
   description: Предстоящите срещи на DevOps клуба в ТУЕС и архив на досегашните лекции с материали.
@@ -47,22 +60,6 @@ meetings:
   materialsLabel: Материали
 past:
   heading: Досега
-maintainer:
-  heading: Кой го води
-  paragraphs:
-    - Клубът се води от Кирил Рангелов. Той изнесе досегашните лекции и поддържа сайта и материалите.
-    - Клубът е отворен за съорганизатори и гост-лектори. Ако искаш да изнесеш лекция или да помагаш с организацията, пиши в Discord или на имейла по-долу.
-join:
-  heading: Влез в клуба
-  text: Обявленията за срещите и въпросите са в Discord сървъра на клуба.
-  cta: Влез в Discord
-nav:
-  label: Основна навигация
-  links:
-    - label: Начало
-      href: /
-    - label: Срещи
-      href: /meetings
 notFound:
   title: Страницата не е намерена
   text: Адресът е грешен или страницата вече не съществува.
@@ -73,12 +70,4 @@ notFound:
       NAME                READY   STATUS         RESTARTS   AGE
       devops-elsys-club   0/1     ErrImagePull   0          404s
     log: Back-off pulling image "devops.elsys.club/stranica:latest"
-footer:
-  contactLabel: Контакт
-  email: kiril.l.rangelov.2022@elsys-bg.org
-  links:
-    - label: Код на сайта
-      href: https://github.com/rangelovkiril/devops-club-site
-    - label: elsys.club
-      href: https://elsys.club
 ---

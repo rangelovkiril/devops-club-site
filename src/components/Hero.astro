@@ -1,7 +1,8 @@
 ---
-import DiscordButton from "./DiscordButton.astro";
+import Button from "./Button.astro";
 
 interface Props {
+  prompt: string;
   title: string;
   lead: string;
   cta: string;
@@ -9,41 +10,56 @@ interface Props {
   discordUrl: string;
 }
 
-const { title, lead, cta, hint, discordUrl } = Astro.props;
+const { prompt, title, lead, cta, hint, discordUrl } = Astro.props;
 ---
 
-<header class="hero">
-  <div class="container">
+<section class="w hero">
+  <div>
+    <p class="prompt">{prompt}</p>
     <h1>{title}</h1>
     <p class="lead">{lead}</p>
-    <DiscordButton href={discordUrl} label={cta} />
+    <Button href={discordUrl} label={cta} />
     <p class="hint">{hint}</p>
   </div>
-</header>
+  <slot />
+</section>
 
 <style>
   .hero {
-    padding: var(--space-4) 0 var(--space-5);
+    display: grid;
+    gap: 40px;
+    padding-top: 40px;
+    padding-bottom: 64px;
   }
 
   .lead {
-    font-size: 1.125rem;
-    color: var(--text-muted);
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 40ch;
+    margin: 0 0 32px;
   }
 
   .hint {
-    margin-top: var(--space-2);
-    color: var(--text-muted);
-    font-size: 0.875rem;
+    font-size: 14px;
+    color: var(--muted);
+    margin: 14px 0 0;
   }
 
-  @media (min-width: 64rem) {
+  .hero > :global(.term) {
+    align-self: start;
+  }
+
+  @media (min-width: 900px) {
     .hero {
-      padding: var(--space-5) 0 6rem;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 64px;
+      padding-top: 112px;
+      padding-bottom: 112px;
+      align-items: center;
     }
 
     .lead {
-      font-size: 1.25rem;
+      font-size: 21px;
     }
   }
 </style>

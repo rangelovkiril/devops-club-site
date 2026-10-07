@@ -3,76 +3,177 @@ import Logo from "./Logo.astro";
 
 interface Props {
   label: string;
+  menuLabel: string;
   links: { label: string; href: string }[];
+  discord: { label: string; href: string };
 }
 
-const { label, links } = Astro.props;
+const { label, menuLabel, links, discord } = Astro.props;
 
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.replace(/(.)\/$/, "$1");
 const isCurrent = (href: string) =>
   href === "/" ? path === "/" : path.startsWith(href);
 ---
 
-<header class="site-header">
-  <div class="container bar">
-    <a class="brand" href="/"><Logo variant="full" width="9rem" /></a>
-    <nav aria-label={label}>
-      <ul>
-        {
-          links.map((link) => (
-            <li>
-              <a
-                href={link.href}
-                aria-current={isCurrent(link.href) ? "page" : undefined}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+<header class="w hd">
+  <Logo />
+  <nav class="nav" aria-label={label}>
+    {
+      links.map((link) => (
+        <a
+          href={link.href}
+          aria-current={isCurrent(link.href) ? "page" : undefined}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+  <details class="menu">
+    <summary aria-label={menuLabel}>
+      <svg class="ib" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      <svg class="ix" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </summary>
+    <nav class="mp" aria-label={menuLabel}>
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isCurrent(link.href) ? "page" : undefined}
+          >
+            <span class="path">exec {link.href}</span>
+            <span class="ttl">{link.label}</span>
+          </a>
+        ))
+      }
+      <a class="ext" href={discord.href}>
+        <span class="path">exec discord</span>
+        <span class="ttl">{discord.label}</span>
+      </a>
     </nav>
-  </div>
+  </details>
 </header>
 
 <style>
-  .bar {
+  .hd {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-1);
-    padding: var(--space-2) 0;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 
-  .brand {
+  .nav {
+    display: none;
+    gap: 0 24px;
+    font-size: 15px;
+  }
+
+  .nav a {
+    padding: 10px 0;
+  }
+
+  .nav a[aria-current="page"] {
+    color: var(--fg);
+  }
+
+  .menu summary {
+    list-style: none;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--fg);
+    box-sizing: border-box;
+  }
+
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu .ix {
+    display: none;
+  }
+
+  .menu[open] .ib {
+    display: none;
+  }
+
+  .menu[open] .ix {
     display: block;
   }
 
-  ul {
-    display: flex;
-    gap: var(--space-3);
-    max-width: none;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .menu[open] summary {
+    border-color: var(--blue);
   }
 
-  nav a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
+  .mp {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 5;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 4px 20px 20px;
   }
 
-  nav a[aria-current="page"] {
-    color: var(--text);
-    font-weight: 700;
+  .mp a {
+    display: block;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--fg);
   }
 
-  @media (min-width: 40rem) {
-    .bar {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+  .mp a:last-child {
+    border-bottom: 0;
+  }
+
+  .mp .path {
+    display: block;
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  .mp .ttl {
+    display: block;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  .mp a[aria-current="page"] .ttl {
+    text-decoration: underline;
+    text-decoration-color: var(--blue);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+
+  .mp a.ext .ttl {
+    color: var(--accent);
+  }
+
+  @media (min-width: 900px) {
+    .hd {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .nav {
+      display: flex;
+    }
+
+    .menu {
+      display: none;
     }
   }
 </style>

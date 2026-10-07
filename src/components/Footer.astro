@@ -2,46 +2,100 @@
 import Logo from "./Logo.astro";
 
 interface Props {
-  contactLabel: string;
+  tagline: string;
   email: string;
-  links: { label: string; href: string }[];
+  discord: { label: string; href: string };
+  links: { key: string; label: string; href: string }[];
+  gap: number;
 }
 
-const { contactLabel, email, links } = Astro.props;
+const { tagline, email, discord, links, gap } = Astro.props;
 ---
 
-<footer class="footer">
-  <div class="container">
-    <div class="logo"><Logo variant="compact" width="9rem" /></div>
-    <p>{contactLabel}: <a class="email" href={`mailto:${email}`}>{email}</a></p>
-    <ul class="links">
-      {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
-    </ul>
+<footer class="f" style={`margin-top: ${gap}px`}>
+  <div class="w fg">
+    <div class="fl">
+      <Logo />
+      <p>{tagline}</p>
+    </div>
+    <dl class="fd">
+      <dt>contact</dt>
+      <dd><a href={`mailto:${email}`}>{email}</a></dd>
+      <dt>discord</dt>
+      <dd><a href={discord.href}>{discord.label}</a></dd>
+      {
+        links.map((link) => (
+          <>
+            <dt>{link.key}</dt>
+            <dd><a href={link.href}>{link.label}</a></dd>
+          </>
+        ))
+      }
+    </dl>
+    <p class="exit"><span>~/devops $</span> exit 0</p>
   </div>
 </footer>
 
 <style>
-  .footer {
-    padding: var(--space-4) 0;
-    border-top: 1px solid var(--border);
-    font-size: 0.875rem;
+  .f {
+    border-top: 1px solid var(--line);
   }
 
-  .logo {
-    margin-bottom: var(--space-3);
+  .fg {
+    display: grid;
+    gap: 32px;
+    padding-top: 48px;
+    padding-bottom: 32px;
   }
 
-  /* Без преноса на тирето домейнът се чете като elsys-/bg.org. */
-  .email {
-    white-space: nowrap;
+  .fl p {
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 34ch;
   }
 
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1) var(--space-3);
+  .fd {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 24px;
     margin: 0;
-    padding: 0;
-    list-style: none;
+    font-size: 15px;
+  }
+
+  .fd dt {
+    color: var(--muted);
+    padding: 10px 0;
+  }
+
+  .fd dd {
+    margin: 0;
+    padding: 10px 0;
+    overflow-wrap: anywhere;
+  }
+
+  .exit {
+    margin: 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .exit span {
+    color: var(--accent);
+  }
+
+  @media (min-width: 900px) {
+    .fg {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: 48px;
+      row-gap: 40px;
+      padding-top: 64px;
+    }
+
+    .exit {
+      grid-column: 1 / -1;
+    }
   }
 </style>

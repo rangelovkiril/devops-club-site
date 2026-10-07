@@ -1,0 +1,40 @@
+---
+interface Props {
+  command: string;
+  label?: string;
+}
+
+const { command, label } = Astro.props;
+---
+
+<div class="term" role={label ? "group" : undefined} aria-label={label}>
+  <p class="cmd"><b>$</b> {command}</p>
+  <slot />
+</div>
+
+<style>
+  .term {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .cmd {
+    color: var(--muted);
+    margin: 0 0 16px;
+    overflow-wrap: anywhere;
+  }
+
+  .cmd b {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  @media (min-width: 900px) {
+    .term {
+      padding: 28px;
+    }
+  }
+</style>

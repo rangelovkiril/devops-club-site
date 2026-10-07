@@ -1,26 +1,29 @@
 ---
-interface Props {
-  variant: "full" | "compact";
-  width: string;
-}
-
-const { variant, width } = Astro.props;
-
-const name = variant === "full" ? "wordmark" : "wordmark-compact";
-const height = variant === "full" ? 200 : 160;
 ---
 
 <!-- Знакът се сменя с отделен файл, не с filter (бранд насоки). -->
-<picture>
-  <source
-    srcset={`/brand/${name}-on-light.svg`}
-    media="(prefers-color-scheme: light)"
-  />
-  <img
-    src={`/brand/${name}-on-dark.svg`}
-    alt="TUES DevOps"
-    width="505"
-    height={height}
-    style={`width: ${width}`}
-  />
-</picture>
+<a class="logo" href="/">
+  <picture>
+    <source srcset="/brand/wordmark-on-light.svg" media="(prefers-color-scheme: light)" />
+    <img src="/brand/wordmark-on-dark.svg" alt="TUES DevOps" width="505" height="200" />
+  </picture>
+</a>
+
+<style>
+  .logo {
+    display: block;
+    line-height: 0;
+  }
+
+  .logo img {
+    display: block;
+    width: 150px;
+    height: auto;
+  }
+
+  @media (min-width: 900px) {
+    .logo img {
+      width: 190px;
+    }
+  }
+</style>

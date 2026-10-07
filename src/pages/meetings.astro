@@ -8,8 +8,6 @@ if (!home) throw new Error("src/content/home.md is missing");
 const { meetings, past } = home.data;
 ---
 
-<Layout title={meetings.title} description={meetings.description}>
-  <main id="main">
-    <Meetings meetings={meetings} pastHeading={past.heading} />
-  </main>
+<Layout title={meetings.heading} description={meetings.description}>
+  <Meetings meetings={meetings} pastHeading={past.heading} />
 </Layout>

@@ -2,10 +2,7 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
-const section = z.object({
-  heading: z.string(),
-  paragraphs: z.array(z.string()).min(1),
-});
+const link = z.object({ label: z.string(), href: z.string() });
 
 const home = defineCollection({
   loader: glob({ base: "./src/content", pattern: "home.md" }),
@@ -13,19 +10,44 @@ const home = defineCollection({
     title: z.string(),
     description: z.string(),
     discordUrl: z.url(),
+    nav: z.object({
+      label: z.string(),
+      menuLabel: z.string(),
+      discord: z.string(),
+      links: z.array(link).length(3),
+    }),
     hero: z.object({
+      prompt: z.string(),
       lead: z.string(),
       cta: z.string(),
       hint: z.string(),
     }),
-    about: section,
-    audience: section,
-    topics: section.extend({ areas: z.array(z.string()).min(1) }),
-    meetingsTeaser: z.object({
-      heading: z.string(),
-      text: z.string(),
-      link: z.string(),
+    events: z.object({
+      label: z.string(),
+      command: z.string(),
+      columns: z.array(z.string()).length(3),
+      soon: z.string(),
+      pending: z.string(),
+      pendingText: z.string(),
+      completed: z.string(),
     }),
+    routes: z.object({
+      label: z.string(),
+      items: z
+        .array(
+          z.object({ href: z.string(), title: z.string(), text: z.string() }),
+        )
+        .min(1),
+    }),
+    footer: z.object({
+      tagline: z.string(),
+      email: z.email(),
+      discord: z.string(),
+      links: z.array(
+        z.object({ key: z.string(), label: z.string(), href: z.url() }),
+      ),
+    }),
+    // Остават до пренасянето на /meetings и 404.
     meetings: z.object({
       title: z.string(),
       description: z.string(),
@@ -38,18 +60,6 @@ const home = defineCollection({
       materialsLabel: z.string(),
     }),
     past: z.object({ heading: z.string() }),
-    maintainer: section,
-    join: z.object({
-      heading: z.string(),
-      text: z.string(),
-      cta: z.string(),
-    }),
-    nav: z.object({
-      label: z.string(),
-      links: z
-        .array(z.object({ label: z.string(), href: z.string() }))
-        .length(2),
-    }),
     notFound: z.object({
       title: z.string(),
       text: z.string(),
@@ -59,11 +69,6 @@ const home = defineCollection({
         output: z.string(),
         log: z.string(),
       }),
-    }),
-    footer: z.object({
-      contactLabel: z.string(),
-      email: z.email(),
-      links: z.array(z.object({ label: z.string(), href: z.url() })),
     }),
   }),
 });

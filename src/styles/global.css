@@ -27,37 +27,15 @@
   color-scheme: dark;
 
   --bg: var(--tues-devops-ink);
-  --text: var(--tues-devops-white);
-  --text-muted: var(--tues-devops-mist);
+  --fg: var(--tues-devops-white);
+  --muted: var(--tues-devops-mist);
+  --line: var(--tues-devops-slate);
   --accent: var(--tues-devops-sky);
-  --action: var(--tues-devops-blue);
-  --on-action: var(--tues-devops-white);
-  --surface: color-mix(
-    in srgb,
-    var(--tues-devops-white) 6%,
-    var(--tues-devops-ink)
-  );
-  --border: color-mix(
-    in srgb,
-    var(--tues-devops-white) 16%,
-    var(--tues-devops-ink)
-  );
-  --kicker: var(--tues-devops-sky);
+  --blue: var(--tues-devops-blue);
+  --on-blue: var(--tues-devops-white);
 
   --font-text: var(--tues-devops-font-text);
   --font-display: var(--tues-devops-font-display);
-
-  --space-1: 0.5rem;
-  --space-2: 1rem;
-  --space-3: 1.5rem;
-  --space-4: 2.5rem;
-  --space-5: 4rem;
-
-  --action-hover: color-mix(in srgb, var(--action) 80%, var(--tues-devops-ink));
-
-  --measure: 65ch;
-  --page-width: 68.75rem;
-  --gutter: 1rem;
 }
 
 /* Двете групи светли токени са еднакви: ръчният override и системната настройка. */
@@ -65,14 +43,10 @@
   color-scheme: light;
 
   --bg: var(--tues-devops-white);
-  --text: var(--tues-devops-ink);
-  --text-muted: var(--tues-devops-slate);
+  --fg: var(--tues-devops-ink);
+  --muted: var(--tues-devops-slate);
+  --line: var(--tues-devops-mist);
   --accent: var(--tues-devops-blue);
-  --action: var(--tues-devops-blue);
-  --on-action: var(--tues-devops-white);
-  --surface: var(--tues-devops-white);
-  --border: var(--tues-devops-mist);
-  --kicker: var(--tues-devops-slate);
 }
 
 @media (prefers-color-scheme: light) {
@@ -80,21 +54,11 @@
     color-scheme: light;
 
     --bg: var(--tues-devops-white);
-    --text: var(--tues-devops-ink);
-    --text-muted: var(--tues-devops-slate);
+    --fg: var(--tues-devops-ink);
+    --muted: var(--tues-devops-slate);
+    --line: var(--tues-devops-mist);
     --accent: var(--tues-devops-blue);
-    --action: var(--tues-devops-blue);
-    --on-action: var(--tues-devops-white);
-    --surface: var(--tues-devops-white);
-    --border: var(--tues-devops-mist);
-    --kicker: var(--tues-devops-slate);
   }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
 }
 
 html {
@@ -105,66 +69,27 @@ html {
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-text);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.7;
-  overflow-wrap: break-word;
-}
-
-h1,
-h2,
-h3 {
-  margin: 0 0 var(--space-2);
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-h1 {
-  font-size: 1.75rem;
-  font-weight: 800;
-}
-
-h2 {
-  font-size: 1.5rem;
-}
-
-h3 {
-  font-size: 1.125rem;
-}
-
-p,
-ul,
-ol {
-  max-width: var(--measure);
-  margin: 0 0 var(--space-2);
-}
-
-ul,
-ol {
-  padding-left: 1.25rem;
 }
 
 a {
   color: var(--accent);
-  text-underline-offset: 0.2em;
+  text-underline-offset: 3px;
 }
 
-a:hover {
-  color: var(--text);
-}
-
-:focus-visible {
-  outline: 3px solid var(--accent);
+a:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
 }
 
-img,
-svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
+/* Корен на страницата: Header, main и Footer са негови деца. */
+.p {
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 /* Space Grotesk няма кирилица: само за латински низове. */
@@ -172,69 +97,40 @@ svg {
   font-family: var(--font-display);
 }
 
-.container {
-  width: min(100% - 2 * var(--gutter), var(--page-width));
-  margin-inline: auto;
+.w {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
 }
 
 /*
- * Два прага: 640 (таблет) и 1024 (десктоп). Контейнерът расте, но текстът
- * вътре остава в --measure (T1), така че расте само пластът около него.
+ * Дисплей-типографията е плътна и с letter-spacing (T2, T4 не важат за нея).
+ * Тялото на текста остава на line-height 1.6 и без letter-spacing.
  */
-@media (min-width: 40rem) {
-  :root {
-    --gutter: 2rem;
+h1 {
+  margin: 0 0 20px;
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.prompt {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--accent);
+}
+
+/* Един праг, както в тарбола. */
+@media (min-width: 900px) {
+  .w {
+    padding-left: 48px;
+    padding-right: 48px;
   }
 
   h1 {
-    font-size: 2.5rem;
-  }
-
-  h2 {
-    font-size: 2rem;
-  }
-}
-
-@media (min-width: 64rem) {
-  :root {
-    --gutter: 4rem;
-  }
-
-  h1 {
-    font-size: 3.5rem;
-  }
-
-  h2 {
-    font-size: 2.5rem;
-  }
-}
-
-/* Номерата на секциите са чист CSS: добавянето на секция не иска преномериране. */
-main {
-  counter-reset: section;
-}
-
-.section h2::before {
-  counter-increment: section;
-  content: counter(section, decimal-leading-zero);
-  display: block;
-  margin-bottom: var(--space-1);
-  color: var(--kicker);
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-/* На широк екран номерът виси вляво от заглавието, в полето на контейнера. */
-@media (min-width: 64rem) {
-  .section h2 {
-    display: flex;
-    align-items: baseline;
-    margin-left: -3rem;
-  }
-
-  .section h2::before {
-    flex: 0 0 3rem;
-    margin-bottom: 0;
+    font-size: 80px;
   }
 }

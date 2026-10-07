@@ -1,0 +1,72 @@
+---
+interface Props {
+  label: string;
+  items: { href: string; title: string; text: string }[];
+}
+
+const { label, items } = Astro.props;
+---
+
+<nav class="w" aria-label={label}>
+  <div class="routes">
+    {
+      items.map((item) => (
+        <a class="rt" href={item.href}>
+          <span class="path">exec {item.href}</span>
+          <span class="ttl">{item.title}</span>
+          <span class="ds">{item.text}</span>
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<style>
+  .routes {
+    border-top: 1px solid var(--line);
+  }
+
+  .rt {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--fg);
+  }
+
+  .rt .path {
+    font-size: 14px;
+    color: var(--accent);
+  }
+
+  .rt .ttl {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    text-decoration-color: var(--blue);
+  }
+
+  .rt .ds {
+    color: var(--muted);
+    max-width: 52ch;
+  }
+
+  @media (min-width: 900px) {
+    .rt {
+      grid-template-columns: 240px minmax(0, 1fr) minmax(0, 1.3fr);
+      align-items: baseline;
+      gap: 32px;
+      padding: 36px 0;
+    }
+
+    .rt .ttl {
+      font-size: 44px;
+    }
+  }
+</style>

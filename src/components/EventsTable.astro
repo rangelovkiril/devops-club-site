@@ -1,0 +1,86 @@
+---
+import Terminal from "./Terminal.astro";
+
+interface Row {
+  when: string;
+  status: string;
+  text: string;
+  href?: string;
+  done?: boolean;
+}
+
+interface Props {
+  label: string;
+  command: string;
+  columns: string[];
+  rows: Row[];
+}
+
+const { label, command, columns, rows } = Astro.props;
+---
+
+<Terminal label={label} command={command}>
+  <div class="ev head">
+    {columns.map((column) => <span>{column}</span>)}
+  </div>
+  {
+    rows.map((row) => (
+      <div class="ev">
+        <span class="d">{row.when}</span>
+        <span class:list={["s", { done: row.done }]}>{row.status}</span>
+        {row.href ? <a href={row.href}>{row.text}</a> : <span class="m">{row.text}</span>}
+      </div>
+    ))
+  }
+</Terminal>
+
+<style>
+  .ev {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .ev .d {
+    color: var(--muted);
+  }
+
+  .ev .s {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .ev .s.done {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .ev a,
+  .ev .m {
+    color: var(--fg);
+    font-weight: 700;
+  }
+
+  .ev.head {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .ev {
+      grid-template-columns: 110px 100px minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .ev.head {
+      display: grid;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 0;
+      padding-top: 0;
+    }
+  }
+</style>

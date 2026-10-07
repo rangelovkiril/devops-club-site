@@ -1,68 +1,50 @@
 ---
-import { getEntry } from "astro:content";
+import EventsTable from "../components/EventsTable.astro";
 import Hero from "../components/Hero.astro";
-import JoinCta from "../components/JoinCta.astro";
-import Section from "../components/Section.astro";
-import TextSection from "../components/TextSection.astro";
-import Topics from "../components/Topics.astro";
+import RouteLinks from "../components/RouteLinks.astro";
 import Layout from "../layouts/Layout.astro";
+import { getHome } from "../lib/content";
+import { formatDate, getMeetings } from "../lib/meetings";
 
-const home = await getEntry("home", "home");
-if (!home) throw new Error("src/content/home.md is missing");
-const {
-  title,
-  description,
-  discordUrl,
-  hero,
-  about,
-  audience,
-  topics,
-  meetingsTeaser,
-  maintainer,
-  join,
-  footer,
-} = home.data;
+const { title, discordUrl, hero, events, routes } = await getHome();
+
+const { planned, past } = await getMeetings();
+const [next] = planned;
+const href = (id: string) => `/meetings#${id}`;
+const rows = [
+  next
+    ? {
+        when: formatDate(next.data.date),
+        status: events.pending,
+        text: next.data.title,
+        href: href(next.id),
+      }
+    : { when: events.soon, status: events.pending, text: events.pendingText },
+  ...past.slice(0, 2).map((meeting) => ({
+    when: formatDate(meeting.data.date),
+    status: events.completed,
+    text: meeting.data.title,
+    href: href(meeting.id),
+    done: true,
+  })),
+];
 ---
 
-<Layout title={title} description={description}>
-  <main id="main">
-    <Hero
-      title={title}
-      lead={hero.lead}
-      cta={hero.cta}
-      hint={hero.hint}
-      discordUrl={discordUrl}
+<Layout>
+  <Hero
+    prompt={hero.prompt}
+    title={title}
+    lead={hero.lead}
+    cta={hero.cta}
+    hint={hero.hint}
+    discordUrl={discordUrl}
+  >
+    <EventsTable
+      label={events.label}
+      command={events.command}
+      columns={events.columns}
+      rows={rows}
     />
-    <TextSection
-      id="about"
-      heading={about.heading}
-      paragraphs={about.paragraphs}
-    />
-    <TextSection
-      id="audience"
-      heading={audience.heading}
-      paragraphs={audience.paragraphs}
-    />
-    <Topics
-      id="topics"
-      heading={topics.heading}
-      paragraphs={topics.paragraphs}
-      areas={topics.areas}
-    />
-    <Section id="meetings" heading={meetingsTeaser.heading}>
-      <p>{meetingsTeaser.text}</p>
-      <p><a href="/meetings">{meetingsTeaser.link}</a></p>
-    </Section>
-    <TextSection
-      id="maintainer"
-      heading={maintainer.heading}
-      paragraphs={maintainer.paragraphs}
-    />
-    <JoinCta
-      heading={join.heading}
-      text={join.text}
-      cta={join.cta}
-      discordUrl={discordUrl}
-    />
-  </main>
+  </Hero>
+  <RouteLinks label={routes.label} items={routes.items} />
 </Layout>
