@@ -1,10 +1,11 @@
 ---
 interface Props {
   label: string;
-  items: { href: string; title: string; text: string }[];
+  items: { cmd: string; href: string; title: string; text: string }[];
+  discord: { cmd: string; title: string; href: string };
 }
 
-const { label, items } = Astro.props;
+const { label, items, discord } = Astro.props;
 ---
 
 <nav class="w" aria-label={label}>
@@ -12,12 +13,16 @@ const { label, items } = Astro.props;
     {
       items.map((item) => (
         <a class="rt" href={item.href}>
-          <span class="path">exec {item.href}</span>
+          <span class="path">{item.cmd}</span>
           <span class="ttl">{item.title}</span>
           <span class="ds">{item.text}</span>
         </a>
       ))
     }
+    <a class="rt ext" href={discord.href}>
+      <span class="path">{discord.cmd}</span>
+      <span class="ttl">{discord.title}</span>
+    </a>
   </div>
 </nav>
 
@@ -50,6 +55,16 @@ const { label, items } = Astro.props;
     text-decoration-thickness: 2px;
     text-underline-offset: 6px;
     text-decoration-color: var(--blue);
+  }
+
+  .rt.ext {
+    margin-top: 32px;
+    border-top: 1px solid var(--accent);
+  }
+
+  .rt.ext .ttl {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
   }
 
   .rt .ds {

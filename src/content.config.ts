@@ -35,9 +35,15 @@ const home = defineCollection({
       label: z.string(),
       items: z
         .array(
-          z.object({ href: z.string(), title: z.string(), text: z.string() }),
+          z.object({
+            cmd: z.string(),
+            href: z.string(),
+            title: z.string(),
+            text: z.string(),
+          }),
         )
         .min(1),
+      discord: z.object({ cmd: z.string(), title: z.string() }),
     }),
     footer: z.object({
       tagline: z.string(),

@@ -45,5 +45,9 @@ const rows = [
       rows={rows}
     />
   </Hero>
-  <RouteLinks label={routes.label} items={routes.items} />
+  <RouteLinks
+    label={routes.label}
+    items={routes.items}
+    discord={{ ...routes.discord, href: discordUrl }}
+  />
 </Layout>
