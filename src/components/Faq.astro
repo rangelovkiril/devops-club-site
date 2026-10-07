@@ -10,8 +10,8 @@ const { items } = Astro.props;
 
 <div class="faq">
   {
-    items.map((item, i) => (
-      <details class="q" open={i === 0}>
+    items.map((item) => (
+      <details class="q">
         <summary>
           {item.question}
           <Chevron />
