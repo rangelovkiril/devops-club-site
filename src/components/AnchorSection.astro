@@ -1,0 +1,64 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  wide?: boolean;
+}
+
+const { id, title, wide } = Astro.props;
+---
+
+<section class="s" id={id}>
+  <div class:list={["w", "g", { wide }]}>
+    <div><a class="anc" href={`#${id}`}>#{id}</a><h2>{title}</h2></div>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .s {
+    border-top: 1px solid var(--line);
+  }
+
+  .g {
+    display: grid;
+    gap: 16px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .anc {
+    display: inline-block;
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    margin-bottom: 6px;
+    padding: 4px 0;
+  }
+
+  h2 {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+
+  @media (min-width: 900px) {
+    .g {
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 48px;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .g.wide {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    h2 {
+      font-size: 48px;
+    }
+  }
+</style>

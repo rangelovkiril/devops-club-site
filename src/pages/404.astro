@@ -1,48 +1,128 @@
 ---
-import { getEntry } from "astro:content";
+import Button from "../components/Button.astro";
+import Terminal from "../components/Terminal.astro";
 import Layout from "../layouts/Layout.astro";
+import { getHome } from "../lib/content";
 
-const home = await getEntry("home", "home");
-if (!home) throw new Error("src/content/home.md is missing");
-const { description, notFound } = home.data;
+const { notFound, nav } = await getHome();
+const others = nav.links.filter((link) => link.href !== "/");
 ---
 
-<Layout title={notFound.title} description={description}>
-  <div class="container">
-    <!-- Контейнерът скролира встрани, за да не изнася страницата (N3). -->
-    <div class="terminal" role="group" tabindex="0" aria-label={notFound.terminal.label}>
-      <pre class="output">{notFound.terminal.output}</pre>
-      <pre class="log">{notFound.terminal.log}</pre>
-    </div>
+<Layout
+  title={notFound.title}
+  description={notFound.description}
+  footerGap={72}
+>
+  <div class="w nf">
     <h1>{notFound.title}</h1>
-    <p>{notFound.text}</p>
-    <p><a href="/">{notFound.back}</a></p>
+    <p class="lead">{notFound.text}</p>
+    <!-- Терминалът е част от шаблона, не от съдържанието. -->
+    <Terminal command="kubectl describe pod devops-elsys-club">
+      <dl>
+        <dt>Name:</dt><dd>devops-elsys-club</dd>
+        <dt>Ready:</dt><dd>0/1</dd>
+        <dt>Status:</dt><dd class="bad">ErrImagePull</dd>
+        <dt>Restarts:</dt><dd>0</dd>
+        <dt>Age:</dt><dd>404s</dd>
+      </dl>
+      <p class="evt">
+        Events:<span>Back-off pulling image "devops.elsys.club/page:latest"</span>
+      </p>
+    </Terminal>
+    <div class="go">
+      <Button href="/" label={notFound.back} />
+      <div class="alt">
+        {others.map((link) => <a href={link.href}>{link.label}</a>)}
+      </div>
+    </div>
   </div>
 </Layout>
 
 <style>
-  .terminal {
-    max-width: 100%;
-    margin-bottom: var(--space-4);
-    padding: var(--space-2) var(--space-3);
-    overflow-x: auto;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
+  .nf {
+    padding-top: 40px;
   }
 
-  pre {
+  h1 {
+    font-size: 40px;
+    line-height: 1.05;
+    margin: 0 0 16px;
+  }
+
+  .lead {
+    font-size: 17px;
+    margin: 0 0 28px;
+    max-width: 40ch;
+  }
+
+  .nf > :global(.term) {
+    max-width: 720px;
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 2px 16px;
     margin: 0;
-    white-space: pre;
   }
 
-  .output {
-    font-size: 0.8125rem;
+  dt {
+    color: var(--muted);
   }
 
-  .log {
-    margin-top: var(--space-1);
-    color: var(--text-muted);
-    font-size: 0.75rem;
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  dd.bad {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .evt {
+    margin: 10px 0 0;
+    color: var(--muted);
+  }
+
+  .evt span {
+    display: block;
+    color: var(--fg);
+    padding-left: 2ch;
+    overflow-wrap: anywhere;
+  }
+
+  .go {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .alt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    font-size: 16px;
+  }
+
+  .alt a {
+    padding: 10px 0;
+  }
+
+  @media (min-width: 900px) {
+    .nf {
+      padding-top: 96px;
+    }
+
+    h1 {
+      font-size: 72px;
+    }
+
+    .go {
+      flex-direction: row;
+      align-items: center;
+      gap: 32px;
+    }
   }
 </style>

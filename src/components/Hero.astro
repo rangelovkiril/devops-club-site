@@ -18,7 +18,7 @@ const { prompt, title, lead, cta, hint, discordUrl } = Astro.props;
     <p class="prompt">{prompt}</p>
     <h1>{title}</h1>
     <p class="lead">{lead}</p>
-    <Button href={discordUrl} label={cta} />
+    <Button href={discordUrl} label={cta} large />
     <p class="hint">{hint}</p>
   </div>
   <slot />

@@ -1,0 +1,187 @@
+---
+import { formatDate, type Meeting } from "../lib/meetings";
+
+interface Props {
+  meetings: Meeting[];
+  topics: { id: string; name: string }[];
+  roomLabel: string;
+  materialsLabel: string;
+  topicLabel: string;
+}
+
+const { meetings, topics, roomLabel, materialsLabel, topicLabel } = Astro.props;
+
+const topicName = (id: string) => topics.find((t) => t.id === id)?.name;
+---
+
+<div class="log">
+  {
+    meetings.map((meeting, i) => {
+      const { date, time, title, topic, speaker, room, area, materials } =
+        meeting.data;
+      const meta = [time, room && `${roomLabel} ${room}`, speaker].filter(
+        Boolean,
+      );
+      return (
+        <details class="m" id={meeting.id} open={i === 0}>
+          <summary>
+            <time class="d" datetime={date.toISOString().slice(0, 10)}>
+              {formatDate(date)}
+            </time>
+            <h3 class="t">{title}</h3>
+            <span class="x" aria-hidden="true" />
+          </summary>
+          <div class="body">
+            <p class="meta">{meta.join(" · ")}</p>
+            <p>{topic}</p>
+            {(materials || area) && (
+              <div class="tags">
+                {materials && (
+                  <a
+                    class="mat"
+                    href={materials}
+                    aria-label={`${materialsLabel}: ${title}`}
+                  >
+                    {materialsLabel}
+                  </a>
+                )}
+                {area && (
+                  <a href="/about#topics">
+                    {topicLabel}: {topicName(area)}
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </details>
+      );
+    })
+  }
+</div>
+
+<style>
+  .log {
+    border-top: 1px solid var(--line);
+  }
+
+  details {
+    border-bottom: 1px solid var(--line);
+  }
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 16px;
+    align-items: baseline;
+    padding: 22px 0;
+    min-height: 44px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .d {
+    grid-column: 1;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .t {
+    grid-column: 1;
+    margin: 0;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .x {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--accent);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  .x::before {
+    content: "+";
+  }
+
+  details[open] .x::before {
+    content: "−";
+  }
+
+  details[open] .x {
+    border-color: var(--blue);
+  }
+
+  .body {
+    padding: 0 0 28px;
+    display: grid;
+    gap: 12px;
+    max-width: 62ch;
+  }
+
+  .body p {
+    margin: 0;
+  }
+
+  .meta {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    font-size: 15px;
+  }
+
+  .tags a {
+    padding: 10px 0;
+  }
+
+  .tags a.mat {
+    font-weight: 700;
+  }
+
+  @media (min-width: 900px) {
+    summary {
+      grid-template-columns: 150px minmax(0, 1fr) auto;
+      padding: 28px 0;
+    }
+
+    .d {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .t {
+      grid-column: 2;
+      grid-row: 1;
+      font-size: 32px;
+    }
+
+    .x {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .body {
+      margin-left: 166px;
+      padding-bottom: 36px;
+    }
+  }
+</style>

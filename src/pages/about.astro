@@ -1,0 +1,106 @@
+---
+import AnchorSection from "../components/AnchorSection.astro";
+import Button from "../components/Button.astro";
+import Facts from "../components/Facts.astro";
+import Faq from "../components/Faq.astro";
+import PageHead from "../components/PageHead.astro";
+import TopicsTable from "../components/TopicsTable.astro";
+import Layout from "../layouts/Layout.astro";
+import { getAbout, getHome } from "../lib/content";
+import { getMeetings } from "../lib/meetings";
+
+const about = await getAbout();
+const { discordUrl, footer } = await getHome();
+const { planned, past } = await getMeetings();
+const sections = ["who", "topics", "speakers", "faq"];
+---
+
+<Layout title={about.title} description={about.description} footerGap={48}>
+  <PageHead
+    prompt={about.prompt}
+    title={about.title}
+    lead={about.lead}
+    tight
+  >
+    <nav class="toc" aria-label={about.tocLabel}>
+      {sections.map((id) => <a href={`#${id}`}>#{id}</a>)}
+    </nav>
+  </PageHead>
+
+  <AnchorSection id="who" title={about.who.heading}>
+    <div class="b">
+      {about.who.paragraphs.map((text) => <p>{text}</p>)}
+      <Facts items={about.who.facts} />
+    </div>
+  </AnchorSection>
+
+  <AnchorSection id="topics" title={about.topics.heading} wide>
+    <div>
+      <TopicsTable
+        note={about.topics.note}
+        command={about.topics.command}
+        columns={about.topics.columns}
+        none={about.topics.none}
+        topics={about.topics.items}
+        meetings={[...planned, ...past]}
+      />
+    </div>
+  </AnchorSection>
+
+  <AnchorSection id="speakers" title={about.speakers.heading}>
+    <div class="b">
+      {about.speakers.paragraphs.map((text) => <p>{text}</p>)}
+      <Button href={discordUrl} label={about.speakers.cta} />
+      <a class="mail" href={`mailto:${footer.email}`}>
+        {about.speakers.mail} {footer.email}
+      </a>
+    </div>
+  </AnchorSection>
+
+  <AnchorSection id="faq" title={about.faq.heading}>
+    <Faq items={about.faq.items} />
+  </AnchorSection>
+</Layout>
+
+<style>
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    margin-top: 24px;
+    font-size: 15px;
+  }
+
+  .toc a {
+    padding: 10px 0;
+  }
+
+  .b p {
+    color: var(--muted);
+    margin: 0 0 14px;
+    max-width: 62ch;
+  }
+
+  .b p:last-child {
+    margin-bottom: 0;
+  }
+
+  .b > :global(.btn) {
+    margin-top: 24px;
+  }
+
+  .mail {
+    display: block;
+    width: fit-content;
+    margin-top: 8px;
+    padding: 10px 0;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  @media (min-width: 900px) {
+    .b p {
+      font-size: 17px;
+    }
+  }
+</style>

@@ -1,13 +1,100 @@
 ---
-import { getEntry } from "astro:content";
-import Meetings from "../components/Meetings.astro";
+import MeetingAccordion from "../components/MeetingAccordion.astro";
+import PageHead from "../components/PageHead.astro";
+import UpcomingCard from "../components/UpcomingCard.astro";
 import Layout from "../layouts/Layout.astro";
+import { getAbout, getHome, getMeetingsPage } from "../lib/content";
+import { formatDate, getMeetings } from "../lib/meetings";
 
-const home = await getEntry("home", "home");
-if (!home) throw new Error("src/content/home.md is missing");
-const { meetings, past } = home.data;
+const page = await getMeetingsPage();
+const { discordUrl } = await getHome();
+const { topics } = await getAbout();
+const { planned, past } = await getMeetings();
+
+const when = (meeting: (typeof planned)[number]) => {
+  const { date, time, room, speaker } = meeting.data;
+  return [formatDate(date), time, room && `${page.roomLabel} ${room}`, speaker]
+    .filter(Boolean)
+    .join(" · ");
+};
 ---
 
-<Layout title={meetings.heading} description={meetings.description}>
-  <Meetings meetings={meetings} pastHeading={past.heading} />
+<Layout title={page.title} description={page.description}>
+  <PageHead
+    prompt={page.prompt}
+    title={page.title}
+    lead={page.lead}
+    note={page.leadNote}
+  />
+  <section class="w end">
+    <h2 class="lbl">{page.upcoming}</h2>
+    <div class="ups">
+      {
+        planned.length > 0 ? (
+          planned.map((meeting) => (
+            <UpcomingCard
+              id={meeting.id}
+              status={page.plannedStatus}
+              title={meeting.data.title}
+              meta={when(meeting)}
+              text={meeting.data.topic}
+              cta={page.discordCta}
+              href={discordUrl}
+            />
+          ))
+        ) : (
+          <UpcomingCard
+            status={page.pendingStatus}
+            title={page.emptyTitle}
+            text={page.emptyText}
+            cta={page.discordCta}
+            href={discordUrl}
+          />
+        )
+      }
+    </div>
+    {
+      past.length > 0 && (
+        <>
+          <h2 class="lbl">
+            {page.past} <span class="sfx">· git log</span>
+          </h2>
+          <MeetingAccordion
+            meetings={past}
+            topics={topics.items}
+            roomLabel={page.roomLabel}
+            materialsLabel={page.materialsLabel}
+            topicLabel={page.topicLabel}
+          />
+        </>
+      )
+    }
+  </section>
 </Layout>
+
+<style>
+  .lbl {
+    margin: 0 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .sfx {
+    text-transform: none;
+  }
+
+  .ups {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 64px;
+  }
+
+  @media (min-width: 900px) {
+    .ups {
+      margin-bottom: 88px;
+    }
+  }
+</style>

@@ -4,27 +4,26 @@ import Hero from "../components/Hero.astro";
 import RouteLinks from "../components/RouteLinks.astro";
 import Layout from "../layouts/Layout.astro";
 import { getHome } from "../lib/content";
-import { formatDate, getMeetings } from "../lib/meetings";
+import { formatDate, getMeetings, meetingHref } from "../lib/meetings";
 
 const { title, discordUrl, hero, events, routes } = await getHome();
 
 const { planned, past } = await getMeetings();
 const [next] = planned;
-const href = (id: string) => `/meetings#${id}`;
 const rows = [
   next
     ? {
         when: formatDate(next.data.date),
         status: events.pending,
         text: next.data.title,
-        href: href(next.id),
+        href: meetingHref(next),
       }
     : { when: events.soon, status: events.pending, text: events.pendingText },
   ...past.slice(0, 2).map((meeting) => ({
     when: formatDate(meeting.data.date),
     status: events.completed,
     text: meeting.data.title,
-    href: href(meeting.id),
+    href: meetingHref(meeting),
     done: true,
   })),
 ];

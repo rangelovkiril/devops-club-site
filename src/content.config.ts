@@ -47,30 +47,81 @@ const home = defineCollection({
         z.object({ key: z.string(), label: z.string(), href: z.url() }),
       ),
     }),
-    // Остават до пренасянето на /meetings и 404.
-    meetings: z.object({
-      title: z.string(),
-      description: z.string(),
-      heading: z.string(),
-      paragraphs: z.array(z.string()).min(1),
-      upcomingHeading: z.string(),
-      emptyTitle: z.string(),
-      emptyText: z.string(),
-      roomLabel: z.string(),
-      materialsLabel: z.string(),
-    }),
-    past: z.object({ heading: z.string() }),
     notFound: z.object({
       title: z.string(),
+      description: z.string(),
       text: z.string(),
       back: z.string(),
-      terminal: z.object({
-        label: z.string(),
-        output: z.string(),
-        log: z.string(),
-      }),
     }),
   }),
+});
+
+const pageHead = {
+  title: z.string(),
+  description: z.string(),
+  prompt: z.string(),
+  lead: z.string(),
+};
+
+const pages = defineCollection({
+  loader: glob({ base: "./src/content/pages", pattern: "*.md" }),
+  schema: z.discriminatedUnion("kind", [
+    z.object({
+      kind: z.literal("about"),
+      ...pageHead,
+      tocLabel: z.string(),
+      who: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+        facts: z
+          .array(z.object({ label: z.string(), value: z.string() }))
+          .min(1),
+      }),
+      topics: z.object({
+        heading: z.string(),
+        note: z.string(),
+        command: z.string(),
+        columns: z.array(z.string()).length(3),
+        none: z.string(),
+        items: z
+          .array(
+            z.object({
+              id: z.string(),
+              name: z.string(),
+              tools: z.array(z.string()).min(1),
+            }),
+          )
+          .min(1),
+      }),
+      speakers: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+        cta: z.string(),
+        mail: z.string(),
+      }),
+      faq: z.object({
+        heading: z.string(),
+        items: z
+          .array(z.object({ question: z.string(), answer: z.string() }))
+          .min(1),
+      }),
+    }),
+    z.object({
+      kind: z.literal("meetings"),
+      ...pageHead,
+      leadNote: z.string(),
+      upcoming: z.string(),
+      past: z.string(),
+      pendingStatus: z.string(),
+      plannedStatus: z.string(),
+      emptyTitle: z.string(),
+      emptyText: z.string(),
+      discordCta: z.string(),
+      roomLabel: z.string(),
+      materialsLabel: z.string(),
+      topicLabel: z.string(),
+    }),
+  ]),
 });
 
 const meetings = defineCollection({
@@ -81,10 +132,12 @@ const meetings = defineCollection({
     title: z.string(),
     topic: z.string(),
     speaker: z.string(),
+    // id на тема от pages/about.md; неизвестен id чупи build-а.
+    area: z.string().optional(),
     room: z.string().optional(),
     status: z.enum(["past", "planned"]),
     materials: z.url().optional(),
   }),
 });
 
-export const collections = { home, meetings };
+export const collections = { home, pages, meetings };

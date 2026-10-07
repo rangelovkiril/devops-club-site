@@ -46,28 +46,9 @@ footer:
     - key: network
       label: elsys.club
       href: https://elsys.club
-meetings:
-  title: Срещи | DevOps клуб ТУЕС
-  description: Предстоящите срещи на DevOps клуба в ТУЕС и архив на досегашните лекции с материали.
-  heading: Срещи
-  paragraphs:
-    - Намерението е да се срещаме в учебен ден след часовете, веднъж на една-две седмици, в сградата на ТУЕС.
-    - Точните дата, час и зала на всяка среща се обявяват в Discord.
-  upcomingHeading: Предстоящи
-  emptyTitle: Очаквайте скоро
-  emptyText: Следващата среща още не е насрочена. Ще я обявим в Discord.
-  roomLabel: зала
-  materialsLabel: Материали
-past:
-  heading: Досега
 notFound:
   title: Страницата не е намерена
+  description: Страницата не е намерена.
   text: Адресът е грешен или страницата вече не съществува.
   back: Към началото
-  terminal:
-    label: Имитация на изход от kubectl
-    output: |-
-      NAME                READY   STATUS         RESTARTS   AGE
-      devops-elsys-club   0/1     ErrImagePull   0          404s
-    log: Back-off pulling image "devops.elsys.club/stranica:latest"
 ---

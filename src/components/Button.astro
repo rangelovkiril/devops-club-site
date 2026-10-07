@@ -2,12 +2,13 @@
 interface Props {
   href: string;
   label: string;
+  large?: boolean;
 }
 
-const { href, label } = Astro.props;
+const { href, label, large } = Astro.props;
 ---
 
-<a class="btn" href={href}>{label}</a>
+<a class:list={["btn", { large }]} href={href}>{label}</a>
 
 <style>
   .btn {
@@ -28,6 +29,9 @@ const { href, label } = Astro.props;
   @media (min-width: 900px) {
     .btn {
       display: inline-flex;
+    }
+
+    .btn.large {
       font-size: 18px;
       padding: 0 32px;
     }

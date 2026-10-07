@@ -1,0 +1,79 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+  status: string;
+  title: string;
+  text: string;
+  meta?: string;
+  cta: string;
+  href: string;
+  id?: string;
+}
+
+const { status, title, text, meta, cta, href, id } = Astro.props;
+---
+
+<div class="up" id={id}>
+  <div>
+    <span class="st">{status}</span>
+    <h3>{title}</h3>
+    {meta && <p>{meta}</p>}
+    <p>{text}</p>
+  </div>
+  <Button href={href} label={cta} />
+</div>
+
+<style>
+  .up {
+    border: 1px solid var(--blue);
+    border-radius: 8px;
+    padding: 24px;
+    display: grid;
+    gap: 20px;
+  }
+
+  .up > :global(.btn) {
+    align-self: center;
+  }
+
+  .st {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 8px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 52ch;
+  }
+
+  p + p {
+    margin-top: 8px;
+  }
+
+  @media (min-width: 900px) {
+    .up {
+      grid-template-columns: minmax(0, 1fr) auto;
+      padding: 32px 36px;
+    }
+
+    h3 {
+      font-size: 36px;
+    }
+  }
+</style>
