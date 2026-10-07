@@ -12,7 +12,7 @@ import { getMeetings } from "../lib/meetings";
 const about = await getAbout();
 const { discordUrl, footer } = await getHome();
 const { planned, past } = await getMeetings();
-const sections = ["who", "topics", "speakers", "faq"];
+const sections = ["whatis", "who", "topics", "speakers", "faq"];
 const [mailLocal, mailDomain] = footer.email.split("@");
 ---
 
@@ -27,6 +27,12 @@ const [mailLocal, mailDomain] = footer.email.split("@");
       {sections.map((id) => <a href={`#${id}`}>#{id}</a>)}
     </nav>
   </PageHead>
+
+  <AnchorSection id="whatis" title={about.whatis.heading}>
+    <div class="b">
+      {about.whatis.paragraphs.map((text) => <p>{text}</p>)}
+    </div>
+  </AnchorSection>
 
   <AnchorSection id="who" title={about.who.heading}>
     <div class="b">

@@ -22,9 +22,9 @@ const home = defineCollection({
     }),
     hero: z.object({
       prompt: z.string(),
-      lead: z.string(),
+      quote: z.string(),
       cta: z.string(),
-      hint: z.string(),
+      more: z.object({ label: z.string(), href: z.string() }),
     }),
     events: z.object({
       label: z.string(),
@@ -85,6 +85,10 @@ const pages = defineCollection({
       kind: z.literal("about"),
       ...pageHead,
       tocLabel: z.string(),
+      whatis: z.object({
+        heading: z.string(),
+        paragraphs: z.array(z.string()).min(1),
+      }),
       who: z.object({
         heading: z.string(),
         paragraphs: z.array(z.string()).min(1),

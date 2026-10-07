@@ -1,6 +1,6 @@
 ---
 title: DevOps клуб ТУЕС
-description: Ученически DevOps клуб в ТУЕС. Срещите се обявяват в Discord.
+description: Как софтуерът стига от лаптопа до сървъра. Контейнери, автоматизация, инфраструктура.
 discordUrl: https://discord.gg/F4GwberfCp
 nav:
   label: Основна навигация
@@ -18,9 +18,11 @@ nav:
       dir: ~/devops/about
 hero:
   prompt: ~/devops $
-  lead: Как софтуерът стига от лаптопа до сървъра. Контейнери, автоматизация, инфраструктура.
+  quote: „Ако се налага да го правиш два пъти — автоматизирай го.“
   cta: Влез в Discord
-  hint: Там обявяваме срещите и отговаряме на въпроси.
+  more:
+    label: Какво е DevOps
+    href: /about#whatis
 events:
   label: Последни събития в клуба
   command: kubectl get events -n devops

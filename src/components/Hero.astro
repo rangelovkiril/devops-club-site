@@ -4,22 +4,24 @@ import Button from "./Button.astro";
 interface Props {
   prompt: string;
   title: string;
-  lead: string;
+  quote: string;
   cta: string;
-  hint: string;
+  more: { label: string; href: string };
   discordUrl: string;
 }
 
-const { prompt, title, lead, cta, hint, discordUrl } = Astro.props;
+const { prompt, title, quote, cta, more, discordUrl } = Astro.props;
 ---
 
 <section class="w hero">
-  <div>
+  <div class="intro">
     <p class="prompt">{prompt}</p>
     <h1>{title}</h1>
-    <p class="lead">{lead}</p>
-    <Button href={discordUrl} label={cta} large />
-    <p class="hint">{hint}</p>
+    <p class="quote">{quote}</p>
+    <div class="actions">
+      <Button href={discordUrl} label={cta} large />
+      <a class="more" href={more.href}><span class="lbl">{more.label}</span><span class="arr" aria-hidden="true">→</span></a>
+    </div>
   </div>
   <slot />
 </section>
@@ -32,34 +34,91 @@ const { prompt, title, lead, cta, hint, discordUrl } = Astro.props;
     padding-bottom: 64px;
   }
 
-  .lead {
+  .quote {
     font-size: 18px;
     line-height: 1.6;
     max-width: 40ch;
     margin: 0 0 32px;
-  }
-
-  .hint {
-    font-size: 14px;
     color: var(--muted);
-    margin: 14px 0 0;
   }
 
-  .hero > :global(.term) {
-    align-self: start;
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 28px;
   }
 
+  .actions > :global(.btn) {
+    flex: none;
+  }
+
+  /* Без рамка и фон, но по-едър от бутона (17/18 px): да не изчезва до него. */
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 1ch;
+    min-height: 56px;
+    font-size: 19px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .lbl {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /*
+   * Подканата е над заглавието. Конзолата започва от базовата линия на
+   * първия ред на заглавието: .intro се разгръща в мрежата на hero-а и
+   * h1 и конзолата са в един ред, подравнени по първата базова линия.
+   */
   @media (min-width: 900px) {
     .hero {
       grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      gap: 64px;
+      grid-template-rows: auto auto auto auto 1fr;
+      column-gap: 64px;
+      row-gap: 0;
       padding-top: 112px;
       padding-bottom: 112px;
-      align-items: center;
+      align-items: start;
     }
 
-    .lead {
+    .intro {
+      display: contents;
+    }
+
+    .hero > :global(.term) {
+      grid-column: 2;
+      grid-row: 2 / 6;
+      align-self: first baseline;
+    }
+
+    .hero h1 {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: first baseline;
+    }
+
+    .hero .prompt {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .quote {
+      grid-column: 1;
+      grid-row: 3;
       font-size: 21px;
+    }
+
+    .actions {
+      grid-column: 1;
+      grid-row: 4;
+    }
+
+    .more {
+      font-size: 20px;
     }
   }
 </style>
