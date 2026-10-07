@@ -14,9 +14,10 @@ interface Props {
   command: string;
   columns: string[];
   rows: Row[];
+  all?: { label: string; href: string };
 }
 
-const { label, command, columns, rows } = Astro.props;
+const { label, command, columns, rows, all } = Astro.props;
 ---
 
 <Terminal label={label} command={command}>
@@ -31,6 +32,16 @@ const { label, command, columns, rows } = Astro.props;
         {row.href ? <a href={row.href}>{row.text}</a> : <span class="m">{row.text}</span>}
       </div>
     ))
+  }
+  {
+    all && (
+      <p class="all">
+        <a href={all.href}>
+          <span class="lbl">{all.label}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </p>
+    )
   }
 </Terminal>
 
@@ -65,6 +76,26 @@ const { label, command, columns, rows } = Astro.props;
 
   .ev.head {
     display: none;
+  }
+
+  .all {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .all a {
+    display: inline-flex;
+    align-items: center;
+    gap: 1ch;
+    min-height: 48px;
+    text-decoration: none;
+  }
+
+  .all .lbl {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   @media (min-width: 900px) {

@@ -4,12 +4,11 @@ import Hero from "../components/Hero.astro";
 import RouteLinks from "../components/RouteLinks.astro";
 import Layout from "../layouts/Layout.astro";
 import { getHome } from "../lib/content";
-import { formatDate, getMeetings, meetingHref } from "../lib/meetings";
+import { formatDate, getHomeMeetings, meetingHref } from "../lib/meetings";
 
 const { title, discordUrl, hero, events, routes } = await getHome();
 
-const { planned, past } = await getMeetings();
-const [next] = planned;
+const { next, past, hasMore } = await getHomeMeetings();
 const rows = [
   next
     ? {
@@ -19,7 +18,7 @@ const rows = [
         href: meetingHref(next),
       }
     : { when: events.soon, status: events.pending, text: events.pendingText },
-  ...past.slice(0, 2).map((meeting) => ({
+  ...past.map((meeting) => ({
     when: formatDate(meeting.data.date),
     status: events.completed,
     text: meeting.data.title,
@@ -43,6 +42,7 @@ const rows = [
       command={events.command}
       columns={events.columns}
       rows={rows}
+      all={hasMore ? { label: events.all, href: events.allHref } : undefined}
     />
   </Hero>
   <RouteLinks

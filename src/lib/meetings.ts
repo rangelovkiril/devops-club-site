@@ -28,6 +28,22 @@ export async function getMeetings() {
   return { planned, past };
 }
 
+/** Колко минали лекции показва блокът на `/`. */
+export const HOME_PAST_LIMIT = 2;
+
+/**
+ * Извадката за `/`: най-близката `planned` и най-скорошните `past`.
+ * Лимитът е тук, не в CSS; `hasMore` е истина, когато има скрити лекции.
+ */
+export async function getHomeMeetings() {
+  const { planned, past } = await getMeetings();
+  return {
+    next: planned[0],
+    past: past.slice(0, HOME_PAST_LIMIT),
+    hasMore: past.length > HOME_PAST_LIMIT,
+  };
+}
+
 /** 27.05.2026, сглобено от ISO низ. Intl с bg-BG би добавил « г.». */
 export function formatDate(date: Date) {
   const [year, month, day] = date.toISOString().slice(0, 10).split("-");

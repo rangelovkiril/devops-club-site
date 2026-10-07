@@ -26,11 +26,13 @@ hero:
 events:
   label: Последни събития в клуба
   command: kubectl get events -n devops
-  columns: [Кога, Статус, Събитие]
+  columns: [Last seen, Reason, Message]
   soon: скоро
   pending: Pending
-  pendingText: Следващата среща — обявява се в Discord
+  pendingText: Следващата среща ще бъде обявена в Discord
   completed: Completed
+  all: виж всички
+  allHref: /meetings
 routes:
   label: Подстраници
   items:

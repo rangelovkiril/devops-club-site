@@ -34,6 +34,8 @@ const home = defineCollection({
       pending: z.string(),
       pendingText: z.string(),
       completed: z.string(),
+      all: z.string(),
+      allHref: z.string(),
     }),
     routes: z.object({
       label: z.string(),
