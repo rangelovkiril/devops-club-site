@@ -1,4 +1,6 @@
 ---
+import Chevron from "./Chevron.astro";
+
 interface Props {
   items: { question: string; answer: string }[];
 }
@@ -10,7 +12,10 @@ const { items } = Astro.props;
   {
     items.map((item, i) => (
       <details class="q" open={i === 0}>
-        <summary>{item.question}</summary>
+        <summary>
+          {item.question}
+          <Chevron />
+        </summary>
         <p>{item.answer}</p>
       </details>
     ))
@@ -42,26 +47,6 @@ const { items } = Astro.props;
 
   summary::-webkit-details-marker {
     display: none;
-  }
-
-  summary::after {
-    content: "+";
-    flex: none;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    color: var(--accent);
-    font-weight: 500;
-    font-size: 20px;
-  }
-
-  .q[open] summary::after {
-    content: "−";
-    border-color: var(--blue);
   }
 
   p {

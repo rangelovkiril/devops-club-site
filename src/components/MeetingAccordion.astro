@@ -1,5 +1,6 @@
 ---
 import { formatDate, type Meeting } from "../lib/meetings";
+import Chevron from "./Chevron.astro";
 
 interface Props {
   meetings: Meeting[];
@@ -29,7 +30,7 @@ const topicName = (id: string) => topics.find((t) => t.id === id)?.name;
               {formatDate(date)}
             </time>
             <h3 class="t">{title}</h3>
-            <span class="x" aria-hidden="true" />
+            <span class="x"><Chevron /></span>
           </summary>
           <div class="body">
             <p class="meta">{meta.join(" · ")}</p>
@@ -76,7 +77,7 @@ const topicName = (id: string) => topics.find((t) => t.id === id)?.name;
     gap: 4px 16px;
     align-items: baseline;
     padding: 22px 0;
-    min-height: 44px;
+    min-height: 48px;
   }
 
   summary::-webkit-details-marker {
@@ -102,28 +103,7 @@ const topicName = (id: string) => topics.find((t) => t.id === id)?.name;
     grid-column: 2;
     grid-row: 1 / span 2;
     align-self: center;
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--accent);
-    width: 44px;
-    height: 44px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-  }
-
-  .x::before {
-    content: "+";
-  }
-
-  details[open] .x::before {
-    content: "−";
-  }
-
-  details[open] .x {
-    border-color: var(--blue);
   }
 
   .body {
