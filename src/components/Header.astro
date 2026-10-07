@@ -41,13 +41,13 @@ const isCurrent = (href: string) =>
             href={link.href}
             aria-current={isCurrent(link.href) ? "page" : undefined}
           >
-            <span class="path">exec {link.href}</span>
+            <span class="path">cd {link.href}</span>
             <span class="ttl">{link.label}</span>
           </a>
         ))
       }
       <a class="ext" href={discord.href}>
-        <span class="path">exec discord</span>
+        <span class="path">xdg-open {discord.href}</span>
         <span class="ttl">{discord.label}</span>
       </a>
     </nav>
@@ -141,6 +141,7 @@ const isCurrent = (href: string) =>
     display: block;
     font-size: 13px;
     color: var(--accent);
+    overflow-wrap: anywhere;
   }
 
   .mp .ttl {
