@@ -6,7 +6,23 @@ import Layout from "../layouts/Layout.astro";
 import { getHome } from "../lib/content";
 import { formatDate, getHomeMeetings, meetingHref } from "../lib/meetings";
 
-const { title, discordUrl, hero, events, routes } = await getHome();
+const { title, discordUrl, hero, events, routes, footer } = await getHome();
+
+const site = Astro.site;
+const source = footer.links.find((link) => link.key === "source");
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: title,
+  url: new URL("/", site).href,
+  logo: new URL("/brand/wordmark-on-light.svg", site).href,
+  sameAs: source ? [source.href] : [],
+  parentOrganization: {
+    "@type": "EducationalOrganization",
+    name: 'Технологично училище "Електронни системи"',
+    url: "https://elsys-bg.org/",
+  },
+};
 
 const { next, past, hasMore } = await getHomeMeetings();
 const rows = [
@@ -29,6 +45,7 @@ const rows = [
 ---
 
 <Layout>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(organization)} />
   <Hero
     prompt={hero.prompt}
     title={title}

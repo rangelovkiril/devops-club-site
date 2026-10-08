@@ -68,6 +68,7 @@ const image = new URL(
     <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
+    <slot name="head" />
   </head>
   <body>
     <div class="p">
