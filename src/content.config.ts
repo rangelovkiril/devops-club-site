@@ -93,7 +93,7 @@ const pages = defineCollection({
         heading: z.string(),
         paragraphs: z.array(z.string()).min(1),
       }),
-      does: z.object({
+      club: z.object({
         heading: z.string(),
         paragraphs: z.array(z.string()).min(1),
       }),

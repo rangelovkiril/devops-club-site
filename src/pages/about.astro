@@ -6,7 +6,7 @@ import Layout from "../layouts/Layout.astro";
 import { getAbout } from "../lib/content";
 
 const about = await getAbout();
-const sections = ["whatis", "does", "faq"];
+const sections = ["whatis", "club", "faq"];
 ---
 
 <Layout title={about.title} description={about.description} footerGap={24}>
@@ -26,9 +26,9 @@ const sections = ["whatis", "does", "faq"];
     </div>
   </AnchorSection>
 
-  <AnchorSection id="does" title={about.does.heading}>
+  <AnchorSection id="club" title={about.club.heading}>
     <div class="b">
-      {about.does.paragraphs.map((text) => <p>{text}</p>)}
+      {about.club.paragraphs.map((text) => <p>{text}</p>)}
     </div>
   </AnchorSection>
 
