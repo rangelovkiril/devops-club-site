@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { render } from "astro:content";
 import { formatDate, type Meeting, materialsLabel } from "../lib/meetings";
 import Chevron from "./Chevron.astro";
 
@@ -20,6 +21,14 @@ interface Props {
 
 const { meetings, command, columns, describe, fields, materialsPrefix } =
   Astro.props;
+
+// Тялото на файла е по избор: без него няма нито обвивка, нито отстъп.
+const entries = await Promise.all(
+  meetings.map(async (meeting) => ({
+    meeting,
+    Content: meeting.body?.trim() ? (await render(meeting)).Content : undefined,
+  })),
+);
 ---
 
 <p class="cmd"><b>$</b> {command}</p>
@@ -28,7 +37,7 @@ const { meetings, command, columns, describe, fields, materialsPrefix } =
 </div>
 <div class="log">
   {
-    meetings.map((meeting, i) => {
+    entries.map(({ meeting, Content }, i) => {
       const {
         date,
         time,
@@ -55,33 +64,40 @@ const { meetings, command, columns, describe, fields, materialsPrefix } =
             <h3 class="t">{title}</h3>
             <span class="x"><Chevron /></span>
           </summary>
-          <div class:list={["body", { framed: image }]}>
-            <div>
-              <p class="cmd"><b>$</b> {describe} {meeting.id}</p>
-              <dl>
-                {rows.map((row) => (
-                  <>
-                    <dt>{row.label}:</dt>
-                    <dd>{row.value}</dd>
-                  </>
-                ))}
-                {materials && (
-                  <>
-                    <dt>{fields.materials}:</dt>
-                    <dd>
-                      <a href={materials}>
-                        {materialsLabel(materials, materialsPrefix)}
-                      </a>
-                    </dd>
-                  </>
-                )}
-              </dl>
+          <div class="body">
+            <div class:list={["top", { framed: image }]}>
+              <div>
+                <p class="cmd"><b>$</b> {describe} {meeting.id}</p>
+                <dl>
+                  {rows.map((row) => (
+                    <>
+                      <dt>{row.label}:</dt>
+                      <dd>{row.value}</dd>
+                    </>
+                  ))}
+                  {materials && (
+                    <>
+                      <dt>{fields.materials}:</dt>
+                      <dd>
+                        <a href={materials}>
+                          {materialsLabel(materials, materialsPrefix)}
+                        </a>
+                      </dd>
+                    </>
+                  )}
+                </dl>
+              </div>
+              {image && (
+                <figure>
+                  <Image src={image} alt="" width={800} height={450} />
+                  {imageCaption && <figcaption>{imageCaption}</figcaption>}
+                </figure>
+              )}
             </div>
-            {image && (
-              <figure>
-                <Image src={image} alt="" width={800} height={450} />
-                {imageCaption && <figcaption>{imageCaption}</figcaption>}
-              </figure>
+            {Content && (
+              <div class="prose">
+                <Content />
+              </div>
             )}
           </div>
         </details>
@@ -155,7 +171,24 @@ const { meetings, command, columns, describe, fields, materialsPrefix } =
 
   .body {
     padding: 0 0 28px;
+  }
+
+  .top:not(.framed),
+  .prose {
     max-width: 62ch;
+  }
+
+  .prose {
+    margin-top: 20px;
+    color: var(--fg);
+  }
+
+  .prose :global(p) {
+    margin: 0 0 12px;
+  }
+
+  .prose :global(p:last-child) {
+    margin-bottom: 0;
   }
 
   .body .cmd {
@@ -240,8 +273,7 @@ const { meetings, command, columns, describe, fields, materialsPrefix } =
       padding-bottom: 36px;
     }
 
-    .body.framed {
-      max-width: none;
+    .top.framed {
       display: grid;
       grid-template-columns: minmax(0, 62ch) minmax(0, 1fr);
       gap: 0 40px;
