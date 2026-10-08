@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { formatDate, type Meeting, materialsLabel } from "../lib/meetings";
 import Chevron from "./Chevron.astro";
 
@@ -28,8 +29,17 @@ const { meetings, command, columns, describe, fields, materialsPrefix } =
 <div class="log">
   {
     meetings.map((meeting, i) => {
-      const { date, time, title, topic, speaker, room, materials } =
-        meeting.data;
+      const {
+        date,
+        time,
+        title,
+        topic,
+        speaker,
+        room,
+        materials,
+        image,
+        imageCaption,
+      } = meeting.data;
       const rows = [
         { key: "time", label: fields.time, value: time },
         { key: "room", label: fields.room, value: room },
@@ -45,26 +55,34 @@ const { meetings, command, columns, describe, fields, materialsPrefix } =
             <h3 class="t">{title}</h3>
             <span class="x"><Chevron /></span>
           </summary>
-          <div class="body">
-            <p class="cmd"><b>$</b> {describe} {meeting.id}</p>
-            <dl>
-              {rows.map((row) => (
-                <>
-                  <dt>{row.label}:</dt>
-                  <dd>{row.value}</dd>
-                </>
-              ))}
-              {materials && (
-                <>
-                  <dt>{fields.materials}:</dt>
-                  <dd>
-                    <a href={materials}>
-                      {materialsLabel(materials, materialsPrefix)}
-                    </a>
-                  </dd>
-                </>
-              )}
-            </dl>
+          <div class:list={["body", { framed: image }]}>
+            <div>
+              <p class="cmd"><b>$</b> {describe} {meeting.id}</p>
+              <dl>
+                {rows.map((row) => (
+                  <>
+                    <dt>{row.label}:</dt>
+                    <dd>{row.value}</dd>
+                  </>
+                ))}
+                {materials && (
+                  <>
+                    <dt>{fields.materials}:</dt>
+                    <dd>
+                      <a href={materials}>
+                        {materialsLabel(materials, materialsPrefix)}
+                      </a>
+                    </dd>
+                  </>
+                )}
+              </dl>
+            </div>
+            {image && (
+              <figure>
+                <Image src={image} alt="" width={800} height={450} />
+                {imageCaption && <figcaption>{imageCaption}</figcaption>}
+              </figure>
+            )}
           </div>
         </details>
       );
@@ -144,6 +162,25 @@ const { meetings, command, columns, describe, fields, materialsPrefix } =
     margin-bottom: 16px;
   }
 
+  figure {
+    margin: 20px 0 0;
+  }
+
+  figure :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  figcaption {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
   dl {
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
@@ -201,6 +238,18 @@ const { meetings, command, columns, describe, fields, materialsPrefix } =
     .body {
       margin-left: 166px;
       padding-bottom: 36px;
+    }
+
+    .body.framed {
+      max-width: none;
+      display: grid;
+      grid-template-columns: minmax(0, 62ch) minmax(0, 1fr);
+      gap: 0 40px;
+    }
+
+    .framed figure {
+      margin: 0;
+      max-width: 420px;
     }
   }
 </style>
