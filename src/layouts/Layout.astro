@@ -21,7 +21,7 @@ const title = pageTitle ? `${pageTitle} · ${home.title}` : home.title;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const image = new URL(
-  "/brand/social/banner-social-preview-1280x640.png",
+  "/brand/social/banner-social-preview-1200x630.png",
   Astro.site,
 );
 ---
@@ -56,8 +56,8 @@ const image = new URL(
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={image} />
-    <meta property="og:image:width" content="1280" />
-    <meta property="og:image:height" content="640" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="TUES DevOps" />
 
     <meta name="twitter:card" content="summary_large_image" />
