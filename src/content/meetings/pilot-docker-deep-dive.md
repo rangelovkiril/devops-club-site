@@ -6,5 +6,5 @@ topic: Контейнерът като процес, излъган за кон�
 speaker: Кирил Рангелов
 room: "8.3.1"
 status: past
-materials: https://github.com/rangelovkiril/tues-devops-materials/tree/main/2026-05-docker
+materials: https://github.com/rangelovkiril/tues-devops-materials/tree/main/pilot-docker-deep-dive
 ---

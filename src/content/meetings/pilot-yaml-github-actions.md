@@ -6,5 +6,5 @@ topic: Структура на workflow, изрази, matrix, secrets, кеш �
 speaker: Кирил Рангелов
 room: "8.3.2"
 status: past
-materials: https://github.com/rangelovkiril/tues-devops-materials/tree/main/2026-05-github-actions
+materials: https://github.com/rangelovkiril/tues-devops-materials/tree/main/pilot-yaml-github-actions
 ---

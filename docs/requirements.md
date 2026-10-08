@@ -50,8 +50,8 @@ src/content/
     about.md       # /about: за кого е, теми, лектори, въпроси
     meetings.md    # /meetings: заглавия, празно състояние, етикети
   meetings/
-    2026-05-docker.md
-    2026-05-github-actions.md
+    pilot-docker-deep-dive.md
+    pilot-yaml-github-actions.md
     2026-10-15.md
 ```
 
@@ -68,7 +68,7 @@ room: "8.3.1"       # опционално
 time: 18:00–19:00   # опционално
 status: past        # past | planned
 materials: https://github.com/...   # опционално
-image: ../../assets/meetings/2026-05-docker.jpg   # опционално, кадър 16:9
+image: ../../assets/meetings/pilot-docker-deep-dive.jpg   # опционално, кадър 16:9
 imageCaption: Подпис към кадъра                    # опционално
 ```
 
@@ -81,7 +81,7 @@ imageCaption: Подпис към кадъра                    # опцион
 - няма нито един `planned` → карта със състояние «Pending» и текст, че срещата още не е насрочена
 - `materials` липсва → няма ред `Materials`
 - `image` липсва → няма кадър и няма плейсхолдър; `imageCaption` се показва само с кадър
-- котвата на срещата е `meeting.id` (`/meetings#2026-05-docker`), не се пише във frontmatter
+- котвата на срещата е `meeting.id` (`/meetings#pilot-docker-deep-dive`), не се пише във frontmatter
 - таблицата на `/` е генерирана: най-близката `planned` (или реда «скоро / Pending») и до две последни `past`
 
 **Критерий за наследяване:** добавяне на среща = един нов `.md` файл + PR. Без докосване на `.astro` файл, без промяна в CSS.
@@ -183,9 +183,9 @@ GitHub, а не Codeberg: CF Pages има нативна Git интеграци�
 
 ```
 tues-devops-materials/
-  2026-05-docker/
+  pilot-docker-deep-dive/
     README.md        # тезата на лекцията + линк към демо приложението
-  2026-05-github-actions/
+  pilot-yaml-github-actions/
     README.md
     01-basics.yaml ... 08-gotchas.yaml
 ```
