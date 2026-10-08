@@ -2,7 +2,7 @@
 interface Props {
   prompt: string;
   title: string;
-  lead: string;
+  lead?: string;
   note?: string;
   tight?: boolean;
 }
@@ -13,10 +13,14 @@ const { prompt, title, lead, note, tight } = Astro.props;
 <section class:list={["w", "ph", { tight }]}>
   <p class="prompt">{prompt}</p>
   <h1>{title}</h1>
-  <p class="lead">
-    {lead}{" "}
-    {note && <span>{note}</span>}
-  </p>
+  {
+    lead && (
+      <p class="lead">
+        {lead}{" "}
+        {note && <span>{note}</span>}
+      </p>
+    )
+  }
   <slot />
 </section>
 

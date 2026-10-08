@@ -80,7 +80,6 @@ const pageHead = {
   title: z.string(),
   description: z.string(),
   prompt: z.string(),
-  lead: z.string(),
 };
 
 const pages = defineCollection({
@@ -113,6 +112,7 @@ const pages = defineCollection({
     z.object({
       kind: z.literal("meetings"),
       ...pageHead,
+      lead: z.string(),
       leadNote: z.string(),
       upcoming: z.string(),
       past: z.string(),
