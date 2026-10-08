@@ -138,7 +138,7 @@ const meetings = defineCollection({
       date: z.coerce.date(),
       time: z.string().optional(),
       title: z.string(),
-      topic: z.string(),
+      description: z.string(),
       speaker: z.string(),
       room: z.string().optional(),
       status: z.enum(["past", "planned"]),
