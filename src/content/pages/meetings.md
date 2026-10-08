@@ -19,7 +19,6 @@ fields:
   time: Time
   room: Room
   speaker: Speaker
-  description: Description
   materials: Materials
 materialsPrefix: "[repo]"
 ---

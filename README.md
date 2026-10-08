@@ -35,7 +35,6 @@ bun run format   # Biome: поправя форматирането
 date: 2026-10-15
 time: 16:10–17:30        # по избор
 title: Заглавие на лекцията
-description: Една-две изречения за темата.
 speaker: Име Фамилия
 room: "8.3.1"            # по избор
 status: planned          # planned | past

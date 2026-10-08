@@ -4,7 +4,7 @@ import Button from "./Button.astro";
 interface Props {
   status: string;
   title: string;
-  text: string;
+  text?: string;
   meta?: string;
   cta: string;
   href: string;
@@ -19,7 +19,7 @@ const { status, title, text, meta, cta, href, id } = Astro.props;
     <span class="st">{status}</span>
     <h3>{title}</h3>
     {meta && <p>{meta}</p>}
-    <p>{text}</p>
+    {text && <p>{text}</p>}
   </div>
   <Button href={href} label={cta} />
 </div>

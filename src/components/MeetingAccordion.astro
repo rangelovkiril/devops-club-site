@@ -13,7 +13,6 @@ interface Props {
     time: string;
     room: string;
     speaker: string;
-    description: string;
     materials: string;
   };
   materialsPrefix: string;
@@ -42,7 +41,6 @@ const entries = await Promise.all(
         date,
         time,
         title,
-        description,
         speaker,
         room,
         materials,
@@ -53,7 +51,6 @@ const entries = await Promise.all(
         { key: "time", label: fields.time, value: time },
         { key: "room", label: fields.room, value: room },
         { key: "speaker", label: fields.speaker, value: speaker },
-        { key: "description", label: fields.description, value: description },
       ].filter((row) => row.value);
       return (
         <details class="m" id={meeting.id} open={i === 0}>

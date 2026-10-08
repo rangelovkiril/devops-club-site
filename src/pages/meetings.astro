@@ -38,7 +38,6 @@ const when = (meeting: (typeof planned)[number]) => {
               status={page.plannedStatus}
               title={meeting.data.title}
               meta={when(meeting)}
-              text={meeting.data.description}
               cta={page.discordCta}
               href={discordUrl}
             />
