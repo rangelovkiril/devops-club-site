@@ -1,5 +1,6 @@
 ---
 title: DevOps клуб ТУЕС
+siteName: TUES DevOps
 description: Как софтуерът стига от лаптопа до сървъра. Контейнери, автоматизация, инфраструктура.
 discordUrl: https://discord.gg/F4GwberfCp
 nav:
@@ -61,7 +62,6 @@ footer:
       href: https://elsys.club
 notFound:
   title: Страницата не е намерена
-  description: Страницата не е намерена.
   text: Адресът е грешен или страницата вече не съществува.
   back: Към началото
 ---

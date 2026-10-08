@@ -12,6 +12,7 @@ const home = defineCollection({
   loader: glob({ base: "./src/content", pattern: "home.md" }),
   schema: z.object({
     title: z.string(),
+    siteName: z.string(),
     description: z.string(),
     discordUrl: z.url(),
     nav: z.object({
@@ -69,7 +70,6 @@ const home = defineCollection({
     }),
     notFound: z.object({
       title: z.string(),
-      description: z.string(),
       text: z.string(),
       back: z.string(),
     }),

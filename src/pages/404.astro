@@ -4,14 +4,14 @@ import Terminal from "../components/Terminal.astro";
 import Layout from "../layouts/Layout.astro";
 import { getHome } from "../lib/content";
 
-const { notFound, nav } = await getHome();
-const others = nav.links.filter((link) => link.href !== "/");
+const { notFound } = await getHome();
 ---
 
 <Layout
   title={notFound.title}
-  description={notFound.description}
+  description={notFound.text}
   footerGap={36}
+  noindex
 >
   <div class="w nf">
     <p class="prompt">~/devops $</p>
@@ -28,9 +28,6 @@ const others = nav.links.filter((link) => link.href !== "/");
     </Terminal>
     <div class="go">
       <Button href="/" label={notFound.back} />
-      <div class="alt">
-        {others.map((link) => <a href={link.href}>{link.label}</a>)}
-      </div>
     </div>
   </div>
   <!-- Единственият JS на сайта (N2): без него в блока остава "page". -->
@@ -71,21 +68,7 @@ const others = nav.links.filter((link) => link.href !== "/");
   }
 
   .go {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     margin-top: 32px;
-  }
-
-  .alt {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 24px;
-    font-size: 16px;
-  }
-
-  .alt a {
-    padding: 10px 0;
   }
 
   @media (min-width: 900px) {
@@ -95,12 +78,6 @@ const others = nav.links.filter((link) => link.href !== "/");
 
     h1 {
       font-size: 72px;
-    }
-
-    .go {
-      flex-direction: row;
-      align-items: center;
-      gap: 32px;
     }
   }
 </style>

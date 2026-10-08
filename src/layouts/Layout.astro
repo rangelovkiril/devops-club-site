@@ -8,6 +8,7 @@ interface Props {
   title?: string;
   description?: string;
   footerGap?: number;
+  noindex?: boolean;
 }
 
 const home = await getHome();
@@ -16,8 +17,10 @@ const {
   title: pageTitle,
   description = home.description,
   footerGap = 48,
+  noindex = false,
 } = Astro.props;
 const title = pageTitle ? `${pageTitle} · ${home.title}` : home.title;
+const ogTitle = pageTitle ?? home.title;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const image = new URL(
@@ -35,6 +38,7 @@ const image = new URL(
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" />
@@ -50,18 +54,18 @@ const image = new URL(
     />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={home.title} />
+    <meta property="og:site_name" content={home.siteName} />
     <meta property="og:locale" content="bg_BG" />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={image} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="TUES DevOps" />
+    <meta property="og:image:alt" content="Лого на DevOps клуб ТУЕС" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
   </head>
