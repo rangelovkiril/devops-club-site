@@ -13,13 +13,13 @@ upcomingEmpty: No resources found in devops namespace.
 discordCta: Следи в Discord
 roomLabel: зала
 listCommand: kubectl get meetings -n devops
-columns: [Дата, Заглавие]
+columns: [Date, Name]
 describeCommand: kubectl describe meeting
 fields:
-  time: Час
-  room: Зала
-  speaker: Лектор
-  description: Описание
-  materials: Материали
+  time: Time
+  room: Room
+  speaker: Speaker
+  description: Description
+  materials: Materials
 materialsPrefix: "[repo]"
 ---
