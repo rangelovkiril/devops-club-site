@@ -11,9 +11,6 @@ interface Props {
 
 const { email, contact, discord, links, gap } = Astro.props;
 
-// Пренос само след @: адресът не се къса насред домейна или името,
-// включително по тирето в elsys-bg.org.
-const [local, domain] = email.split("@");
 const svg = {
   width: 20,
   height: 20,
@@ -42,13 +39,11 @@ const icons = {
     <div class="fl">
       <Logo />
     </div>
+    <p class="exit"><span>~/devops $</span> exit 0</p>
     <ul class="fd">
       <li>
         <svg {...svg} set:html={icons.mail} />
-        <span>
-          <span class="nb">{contact} ·</span>{" "}
-          <a class="mail" href={`mailto:${email}`}><span class="nb">{local}@</span><wbr /><span class="nb">{domain}</span></a>
-        </span>
+        <a href={`mailto:${email}`} title={email} aria-label={email}>{contact}</a>
       </li>
       <li>
         <svg {...svg} set:html={icons.discord} />
@@ -63,7 +58,6 @@ const icons = {
         ))
       }
     </ul>
-    <p class="exit"><span>~/devops $</span> exit 0</p>
   </div>
 </footer>
 
@@ -72,18 +66,36 @@ const icons = {
     border-top: 1px solid var(--line);
   }
 
+  /*
+    От 900 px логото е широко колкото редът exit 0. Той е моноширинен (JetBrains Mono,
+    0.6 em на знак), 17 знака: «~/devops $ exit 0». При 16 px това са 163,2 px.
+    Смяна на --exit-fs, на текста или на шрифта сменя и логото; текстът и
+    шрифтът изискват ръчна проверка. Под 120 px (минимум по бранд насоките)
+    логото не слиза.
+  */
   .fg {
+    --exit-fs: 16px;
+    --exit-chars: 17;
+    --exit-w: calc(var(--exit-chars) * 0.6 * var(--exit-fs));
     display: grid;
-    gap: 32px;
-    padding-top: 48px;
-    padding-bottom: max(32px, env(safe-area-inset-bottom));
+    gap: 16px;
+    padding-top: 24px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+
+  /*
+    На телефон логото е 120 px (минимумът по бранд насоките) и НЕ следва реда
+    exit 0: 120 + 163,2 се събират един до друг. Връзката с --exit-w е само от 900 px.
+  */
+  .fg {
+    --logo-w: 120px;
   }
 
   .fd {
     list-style: none;
     margin: 0;
     padding: 0;
-    font-size: 15px;
+    font-size: 13px;
   }
 
   .fd li {
@@ -93,26 +105,27 @@ const icons = {
     padding: 10px 0;
   }
 
+  /* Крайните редове без външен отстъп: той е отстъпът на футъра. */
+  .fd li:first-child {
+    padding-top: 0;
+  }
+
+  .fd li:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Иконката следва размера на текста: 20 px при 15 px, сега 17,3 px при 13 px. */
   .fd svg {
     flex: none;
-    margin-top: 2px;
+    width: 1.333em;
+    height: 1.333em;
+    margin-top: 0.133em;
     color: var(--muted);
-  }
-
-  .nb {
-    white-space: nowrap;
-  }
-
-  /* Под 900 px ширината за адреса е 193–248 px: по-малък размер, за да се събере частта преди @. */
-  .mail {
-    font-size: 14px;
   }
 
   .exit {
     margin: 0;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-    font-size: 16px;
+    font-size: var(--exit-fs);
     color: var(--muted);
   }
 
@@ -120,20 +133,111 @@ const icons = {
     color: var(--accent);
   }
 
+  /* От 900 px: логото и exit 0 са вляво, линковете вдясно. */
   @media (min-width: 900px) {
-    .mail {
-      font-size: inherit;
+    .fg {
+      --logo-w: max(120px, var(--exit-w));
+      grid-template-columns: max-content minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      column-gap: 48px;
+      row-gap: 12px;
+      padding-top: 32px;
+      padding-bottom: 16px;
     }
 
-    .fg {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      column-gap: 48px;
-      row-gap: 40px;
-      padding-top: 64px;
+    .fl {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .fd {
+      grid-column: 2;
+      grid-row: 1 / 3;
     }
 
     .exit {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+
+  /*
+    От 360 px до 899 px exit 0 е вдясно от логото, с вертикален център върху
+    центъра на логото, а линковете са под тях. Под 360 px (280 px съдържание при
+    320) 120 + 16 + 163,2 не се събират и exit 0 остава под логото.
+    Центърът на логото е центърът на знака, не на изображението: знакът е от
+    22,5 до 186,5 от 200, т.е. средата му е на 104,5 (на 4,5 / 200 под средата на
+    изображението, ~1 px при 120 px). Центърът на реда exit 0 е върху средата на
+    главните (0,367 em над базовата линия) с точност под 0,1 px.
+  */
+  @media (min-width: 360px) and (max-width: 899px) {
+    .fg {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .fl {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .exit {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+      position: relative;
+      top: calc(var(--logo-w) * 200 / 505 * 4.5 / 200);
+    }
+
+    .fd {
       grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+
+  /* Над 360 px линковете са на два реда по два в равни колони. */
+  @media (min-width: 361px) {
+    .fd {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 8px;
+      row-gap: 20px;
+    }
+
+    .fd li {
+      padding: 0;
+    }
+  }
+
+  /* На 361 px колоната е ~157 px и «Свържи се с нас» иска ~154: разстоянието се свива, не шрифтът. */
+  @media (min-width: 400px) {
+    .fd {
+      column-gap: 16px;
+    }
+  }
+
+  /*
+    От 900 px линковете са вляво, центрирани по височина спрямо целия ляв блок
+    (лого + exit 0). Шрифтът е 16 px, колкото основния текст; иконките следват
+    (1.333em). Това не засяга логото: то следва само реда exit 0 (--exit-fs).
+    До 1059 px четирите не се събират на един ред (при 16 px са нужни ~1025 px
+    ширина на страницата плюс запас за лента за скрол): две колони по два реда,
+    наредени вляво. Flex с wrap би дал 3 + 1.
+  */
+  @media (min-width: 900px) {
+    .fd {
+      grid-template-columns: repeat(2, max-content);
+      column-gap: 40px;
+      align-self: center;
+      font-size: 16px;
+    }
+  }
+
+  /* От 1060 px на един ред, flex с gap; ако текстът порасне, се пренася. */
+  @media (min-width: 1060px) {
+    .fd {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 40px;
     }
   }
 </style>

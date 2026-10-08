@@ -1,11 +1,13 @@
----
----
-
 <!-- Знакът се сменя с отделен файл, не с filter (бранд насоки). -->
 <a class="logo" href="/">
   <picture>
     <source srcset="/brand/wordmark-on-light.svg" media="(prefers-color-scheme: light)" />
-    <img src="/brand/wordmark-on-dark.svg" alt="TUES DevOps" width="505" height="200" />
+    <img
+      src="/brand/wordmark-on-dark.svg"
+      alt="TUES DevOps"
+      width="505"
+      height="200"
+    />
   </picture>
 </a>
 
@@ -17,13 +19,14 @@
 
   .logo img {
     display: block;
-    width: 150px;
+    width: var(--logo-w, 150px);
     height: auto;
   }
 
+  /* Ширината се задава отвън с --logo-w (футърът). */
   @media (min-width: 900px) {
     .logo img {
-      width: 190px;
+      width: var(--logo-w, 190px);
     }
   }
 </style>

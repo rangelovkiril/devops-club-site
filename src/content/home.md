@@ -5,7 +5,7 @@ discordUrl: https://discord.gg/F4GwberfCp
 nav:
   label: Основна навигация
   menuLabel: Меню
-  discord: Влез в Discord
+  discord: Discord
   links:
     - label: Начало
       href: /
@@ -51,13 +51,13 @@ routes:
 footer:
   email: kiril.l.rangelov.2022@elsys-bg.org
   contact: Свържи се с нас
-  discord: Влез в Discord
+  discord: Discord
   links:
     - key: source
-      label: Виж кода на сайта
+      label: Код на сайта
       href: https://github.com/rangelovkiril/devops-club-site
     - key: network
-      label: Разгледай други клубове
+      label: Други клубове
       href: https://elsys.club
 notFound:
   title: Страницата не е намерена
