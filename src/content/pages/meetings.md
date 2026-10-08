@@ -14,5 +14,4 @@ emptyText: Ще я обявим в Discord с дата, час и зала.
 discordCta: Следи в Discord
 roomLabel: зала
 materialsLabel: Материали
-topicLabel: Тема
 ---

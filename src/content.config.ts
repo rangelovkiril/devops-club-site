@@ -94,34 +94,14 @@ const pages = defineCollection({
         heading: z.string(),
         paragraphs: z.array(z.string()).min(1),
       }),
-      who: z.object({
+      does: z.object({
         heading: z.string(),
         paragraphs: z.array(z.string()).min(1),
-        facts: z
-          .array(z.object({ label: z.string(), value: z.string() }))
-          .min(1),
-      }),
-      topics: z.object({
-        heading: z.string(),
-        note: z.string(),
-        command: z.string(),
-        columns: z.array(z.string()).length(3),
-        none: z.string(),
-        items: z
-          .array(
-            z.object({
-              id: z.string(),
-              name: z.string(),
-              tools: z.array(z.string()).min(1),
-            }),
-          )
-          .min(1),
       }),
       speakers: z.object({
         heading: z.string(),
-        paragraphs: z.array(z.string()).min(1),
+        text: z.string(),
         cta: z.string(),
-        mail: z.string(),
       }),
       faq: z.object({
         heading: z.string(),
@@ -143,7 +123,6 @@ const pages = defineCollection({
       discordCta: z.string(),
       roomLabel: z.string(),
       materialsLabel: z.string(),
-      topicLabel: z.string(),
     }),
   ]),
 });
@@ -156,8 +135,6 @@ const meetings = defineCollection({
     title: z.string(),
     topic: z.string(),
     speaker: z.string(),
-    // id на тема от pages/about.md; неизвестен id чупи build-а.
-    area: z.string().optional(),
     room: z.string().optional(),
     status: z.enum(["past", "planned"]),
     materials: z.url().optional(),

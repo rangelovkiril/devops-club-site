@@ -3,12 +3,11 @@ import MeetingAccordion from "../components/MeetingAccordion.astro";
 import PageHead from "../components/PageHead.astro";
 import UpcomingCard from "../components/UpcomingCard.astro";
 import Layout from "../layouts/Layout.astro";
-import { getAbout, getHome, getMeetingsPage } from "../lib/content";
+import { getHome, getMeetingsPage } from "../lib/content";
 import { formatDate, getMeetings } from "../lib/meetings";
 
 const page = await getMeetingsPage();
 const { discordUrl } = await getHome();
-const { topics } = await getAbout();
 const { planned, past } = await getMeetings();
 
 const when = (meeting: (typeof planned)[number]) => {
@@ -59,10 +58,8 @@ const when = (meeting: (typeof planned)[number]) => {
           <h2 class="lbl">{page.past}</h2>
           <MeetingAccordion
             meetings={past}
-            topics={topics.items}
             roomLabel={page.roomLabel}
             materialsLabel={page.materialsLabel}
-            topicLabel={page.topicLabel}
           />
         </>
       )

@@ -4,21 +4,17 @@ import Chevron from "./Chevron.astro";
 
 interface Props {
   meetings: Meeting[];
-  topics: { id: string; name: string }[];
   roomLabel: string;
   materialsLabel: string;
-  topicLabel: string;
 }
 
-const { meetings, topics, roomLabel, materialsLabel, topicLabel } = Astro.props;
-
-const topicName = (id: string) => topics.find((t) => t.id === id)?.name;
+const { meetings, roomLabel, materialsLabel } = Astro.props;
 ---
 
 <div class="log">
   {
     meetings.map((meeting, i) => {
-      const { date, time, title, topic, speaker, room, area, materials } =
+      const { date, time, title, topic, speaker, room, materials } =
         meeting.data;
       const meta = [time, room && `${roomLabel} ${room}`, speaker].filter(
         Boolean,
@@ -35,22 +31,15 @@ const topicName = (id: string) => topics.find((t) => t.id === id)?.name;
           <div class="body">
             <p class="meta">{meta.join(" · ")}</p>
             <p>{topic}</p>
-            {(materials || area) && (
+            {materials && (
               <div class="tags">
-                {materials && (
-                  <a
-                    class="mat"
-                    href={materials}
-                    aria-label={`${materialsLabel}: ${title}`}
-                  >
-                    {materialsLabel}
-                  </a>
-                )}
-                {area && (
-                  <a href="/about#topics">
-                    {topicLabel}: {topicName(area)}
-                  </a>
-                )}
+                <a
+                  class="mat"
+                  href={materials}
+                  aria-label={`${materialsLabel}: ${title}`}
+                >
+                  {materialsLabel}
+                </a>
               </div>
             )}
           </div>

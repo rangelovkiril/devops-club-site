@@ -1,7 +1,7 @@
 ---
 kind: about
 title: За клуба
-description: Теми, за кого е клубът и как да изнесеш лекция.
+description: Какво е DevOps, какво правим в клуба и как да изнесеш лекция.
 prompt: ~/devops/about $
 lead: Ученическа група в ТУЕС. Разглеждаме как приложенията се пишат, пакетират, тестват и пускат и какво става с тях след това.
 tocLabel: На тази страница
@@ -10,56 +10,14 @@ whatis:
   paragraphs:
     - "DevOps е начинът, по който кодът стига от лаптопа на разработчика до работещ сървър: пакетира се, тества се и се пуска автоматично."
     - Вместо да повтаряш едни и същи ръчни стъпки, ги описваш веднъж като код и оставяш машината да ги изпълнява.
-who:
-  heading: За кого е
+does:
+  heading: Какво правим в клуба
   paragraphs:
-    - Не се иска предварително знание и няма изискване за ниво. Достатъчно е да си любопитен.
-  facts:
-    - label: "Клас:"
-      value: 9.–11. в ТУЕС
-    - label: "Кога:"
-      value: учебен ден, след часовете
-    - label: "Честота:"
-      value: веднъж на една-две седмици
-    - label: "Къде:"
-      value: сградата на ТУЕС
-    - label: "Зала:"
-      value: обявява се в Discord
-topics:
-  heading: Теми
-  note: Не е програма и не обещава ред или дати. Конкретните теми избираме заедно.
-  command: kubectl get topics -n devops
-  columns: [Тема, Инструменти, Лекции]
-  none: още няма
-  items:
-    - id: linux
-      name: Linux и команден ред
-      tools: [Linux, Bash]
-    - id: containers
-      name: Контейнери
-      tools: [Docker, Podman]
-    - id: ci-cd
-      name: CI/CD и автоматизация
-      tools: [GitHub Actions]
-    - id: networking
-      name: Мрежи и как стига заявката до сървъра
-      tools: [DNS, HTTP]
-    - id: cloud
-      name: Облак и Kubernetes
-      tools: [Kubernetes]
-    - id: iac
-      name: Инфраструктура като код
-      tools: [Terraform, Ansible]
-    - id: observability
-      name: Наблюдаемост
-      tools: [Prometheus, Grafana]
+    - "Срещаме се и разглеждаме на живо как работят нещата около кода: командния ред в Linux, контейнерите с Docker и Podman, автоматизацията с GitHub Actions, мрежите, облака и Kubernetes, инфраструктурата като код с Terraform и Ansible и наблюдението с Prometheus и Grafana. Не се иска предварително знание. Конкретните теми избираме заедно."
 speakers:
   heading: Изнеси лекция
-  paragraphs:
-    - Клубът се води от Кирил Рангелов. Отворен е за съорганизатори и гост-лектори.
-    - Ако искаш да изнесеш лекция или да помагаш с организацията, пиши.
+  text: Клубът е отворен за гост-лектори и съорганизатори.
   cta: Пиши в Discord
-  mail: или на
 faq:
   heading: Въпроси
   items:
