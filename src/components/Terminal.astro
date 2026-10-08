@@ -5,11 +5,17 @@ interface Props {
 }
 
 const { command, label } = Astro.props;
+const hasAction = Astro.slots.has("action");
 ---
 
-<div class="term" role={label ? "group" : undefined} aria-label={label}>
+<div
+  class:list={["term", { act: hasAction }]}
+  role={label ? "group" : undefined}
+  aria-label={label}
+>
   <p class="cmd"><b>$</b> <slot name="command">{command}</slot></p>
   <slot />
+  {hasAction && <div class="action"><slot name="action" /></div>}
 </div>
 
 <style>
@@ -33,9 +39,31 @@ const { command, label } = Astro.props;
     font-weight: 500;
   }
 
+  .act .action {
+    margin-top: 20px;
+  }
+
   @media (min-width: 900px) {
     .term {
       padding: 28px;
+    }
+
+    /* Команда и изход вляво, действието вдясно, центрирано по двата реда. */
+    .act {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 24px;
+      align-items: center;
+    }
+
+    .act > :global(*:not(.action)) {
+      grid-column: 1;
+    }
+
+    .act .action {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      margin-top: 0;
     }
   }
 </style>

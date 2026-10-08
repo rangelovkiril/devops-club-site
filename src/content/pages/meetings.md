@@ -7,11 +7,19 @@ lead: Учебен ден след часовете, веднъж на една-
 leadNote: Дата, час и зала се обявяват в Discord.
 upcoming: Предстоящи
 past: Досега
-pendingStatus: Pending
 plannedStatus: Scheduled
-emptyTitle: Следващата среща още не е насрочена
-emptyText: Ще я обявим в Discord с дата, час и зала.
+upcomingCommand: kubectl get meetings --field-selector status=Pending
+upcomingEmpty: No resources found in devops namespace.
 discordCta: Следи в Discord
 roomLabel: зала
-materialsLabel: Материали
+listCommand: kubectl get meetings -n devops
+columns: [Дата, Заглавие]
+describeCommand: kubectl describe meeting
+fields:
+  time: Час
+  room: Зала
+  speaker: Лектор
+  description: Описание
+  materials: Материали
+materialsPrefix: "[repo]"
 ---

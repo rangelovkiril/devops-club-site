@@ -1,6 +1,8 @@
 ---
+import Button from "../components/Button.astro";
 import MeetingAccordion from "../components/MeetingAccordion.astro";
 import PageHead from "../components/PageHead.astro";
+import Terminal from "../components/Terminal.astro";
 import UpcomingCard from "../components/UpcomingCard.astro";
 import Layout from "../layouts/Layout.astro";
 import { getHome, getMeetingsPage } from "../lib/content";
@@ -42,13 +44,10 @@ const when = (meeting: (typeof planned)[number]) => {
             />
           ))
         ) : (
-          <UpcomingCard
-            status={page.pendingStatus}
-            title={page.emptyTitle}
-            text={page.emptyText}
-            cta={page.discordCta}
-            href={discordUrl}
-          />
+          <Terminal command={page.upcomingCommand}>
+            <p class="out">{page.upcomingEmpty}</p>
+            <Button slot="action" href={discordUrl} label={page.discordCta} />
+          </Terminal>
         )
       }
     </div>
@@ -58,8 +57,11 @@ const when = (meeting: (typeof planned)[number]) => {
           <h2 class="lbl">{page.past}</h2>
           <MeetingAccordion
             meetings={past}
-            roomLabel={page.roomLabel}
-            materialsLabel={page.materialsLabel}
+            command={page.listCommand}
+            columns={page.columns}
+            describe={page.describeCommand}
+            fields={page.fields}
+            materialsPrefix={page.materialsPrefix}
           />
         </>
       )
@@ -70,11 +72,15 @@ const when = (meeting: (typeof planned)[number]) => {
 <style>
   .lbl {
     margin: 0 0 16px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--muted);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+  }
+
+  .out {
+    margin: 0;
   }
 
   .ups {

@@ -39,5 +39,11 @@ export function formatDate(date: Date) {
   return `${day}.${month}.${year}`;
 }
 
+/** `[repo]/2026-05-docker/`: последният сегмент на адреса на материалите. */
+export function materialsLabel(url: string, prefix: string) {
+  const segment = new URL(url).pathname.split("/").filter(Boolean).pop();
+  return `${prefix}/${segment}/`;
+}
+
 /** `/meetings#<id>`: котвата е id-то на записа, не се пише във frontmatter. */
 export const meetingHref = (meeting: Meeting) => `/meetings#${meeting.id}`;
