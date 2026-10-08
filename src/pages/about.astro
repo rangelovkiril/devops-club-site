@@ -3,11 +3,10 @@ import AnchorSection from "../components/AnchorSection.astro";
 import Faq from "../components/Faq.astro";
 import PageHead from "../components/PageHead.astro";
 import Layout from "../layouts/Layout.astro";
-import { getAbout, getHome } from "../lib/content";
+import { getAbout } from "../lib/content";
 
 const about = await getAbout();
-const { discordUrl } = await getHome();
-const sections = ["whatis", "does", "speakers", "faq"];
+const sections = ["whatis", "does", "faq"];
 ---
 
 <Layout title={about.title} description={about.description} footerGap={24}>
@@ -30,12 +29,6 @@ const sections = ["whatis", "does", "speakers", "faq"];
   <AnchorSection id="does" title={about.does.heading}>
     <div class="b">
       {about.does.paragraphs.map((text) => <p>{text}</p>)}
-    </div>
-  </AnchorSection>
-
-  <AnchorSection id="speakers" title={about.speakers.heading}>
-    <div class="b">
-      <p>{about.speakers.text} <a href={discordUrl}>{about.speakers.cta}</a></p>
     </div>
   </AnchorSection>
 

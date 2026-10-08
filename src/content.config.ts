@@ -97,11 +97,6 @@ const pages = defineCollection({
         heading: z.string(),
         paragraphs: z.array(z.string()).min(1),
       }),
-      speakers: z.object({
-        heading: z.string(),
-        text: z.string(),
-        cta: z.string(),
-      }),
       faq: z.object({
         heading: z.string(),
         items: z
