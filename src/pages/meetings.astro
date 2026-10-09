@@ -12,6 +12,9 @@ const page = await getMeetingsPage();
 const { discordUrl } = await getHome();
 const { planned, past } = await getMeetings();
 
+// Етикетът на линка е в [скоби], за да стои целият текст в съдържанието.
+const [leadBefore, leadLink, leadAfter] = page.lead.split(/[[\]]/);
+
 const when = (meeting: (typeof planned)[number]) => {
   const { date, time, room, speaker } = meeting.data;
   return [formatDate(date), time, room && `${page.roomLabel} ${room}`, speaker]
@@ -21,12 +24,9 @@ const when = (meeting: (typeof planned)[number]) => {
 ---
 
 <Layout title={page.title} description={page.description}>
-  <PageHead
-    prompt={page.prompt}
-    title={page.title}
-    lead={page.lead}
-    note={page.leadNote}
-  />
+  <PageHead prompt={page.prompt} title={page.title}>
+    <Fragment slot="lead">{leadBefore}<a href={discordUrl}>{leadLink}</a>{leadAfter}</Fragment>
+  </PageHead>
   <section class="w end">
     <h2 class="lbl">{page.upcoming}</h2>
     <div class="ups">

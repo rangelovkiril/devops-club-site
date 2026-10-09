@@ -2,22 +2,21 @@
 interface Props {
   prompt: string;
   title: string;
-  lead?: string;
-  note?: string;
   tight?: boolean;
 }
 
-const { prompt, title, lead, note, tight } = Astro.props;
+const { prompt, title, tight } = Astro.props;
+// Lead-ът е slot, защото в него има линк (виж /meetings).
+const hasLead = Astro.slots.has("lead");
 ---
 
 <section class:list={["w", "ph", { tight }]}>
   <p class="prompt">{prompt}</p>
   <h1>{title}</h1>
   {
-    lead && (
+    hasLead && (
       <p class="lead">
-        {lead}{" "}
-        {note && <span>{note}</span>}
+        <slot name="lead" />
       </p>
     )
   }
@@ -39,10 +38,6 @@ const { prompt, title, lead, note, tight } = Astro.props;
     line-height: 1.6;
     max-width: 52ch;
     margin: 0;
-  }
-
-  .lead span {
-    color: var(--muted);
   }
 
   @media (min-width: 900px) {

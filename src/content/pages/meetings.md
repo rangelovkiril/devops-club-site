@@ -3,8 +3,7 @@ kind: meetings
 title: Срещи
 description: Предстоящи и архив на минали срещи.
 prompt: ~/devops/meetings $
-lead: Учебен ден след часовете, веднъж на една-две седмици, в сградата на ТУЕС.
-leadNote: Дата, час и зала се обявяват в Discord.
+lead: Срещите се провеждат след часовете, веднъж на една-две седмици. За повече подробности следи [Discord].
 upcoming: Предстоящи
 past: Досега
 plannedStatus: Scheduled

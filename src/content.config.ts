@@ -108,7 +108,6 @@ const pages = defineCollection({
       kind: z.literal("meetings"),
       ...pageHead,
       lead: z.string(),
-      leadNote: z.string(),
       upcoming: z.string(),
       past: z.string(),
       plannedStatus: z.string(),
